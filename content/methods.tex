@@ -55,7 +55,7 @@ According to many representation learning experiments \cite{grover_node2vec:_201
 \subsection{Hyperparameter Optimization}
 All models have gone through a hyperparameter optimization process. With the help of the optuna Python package \cite{akiba_optuna:_2019}, ranges for the hyperparameters were selected and a number of trials were run while randomly changing parameters to find the hyperparameters that maximize the Matthews correlation coefficient, explained in \ref{evaluation_section}. All hyperparameter ranges/values were chosen based on \cite{yue_graph_2019}. The ranges and values for the hyperparameters where chosen based on their role in the model and were taken from \cite{yue_graph_2019}.
 
-\begin{table}[h!]
+\begin{table}[ht!]
     \centering
     \begin{tabular}{ |l|l|r| } 
         \hline
@@ -100,7 +100,7 @@ The results of the classifier are interpreted using two measures, $p$-value and 
 \label{evaluation_section}
 To evaluate the performance of the predictive models, five evaluation metrics were calculated. The best performance was selected based on the overall evaluation results. The calculations depend on the number of true positives (TP), true negatives (TN), false positives (FP), and false negatives (FN). Table ~\ref{tab:evaluation} presents the calculations used in the evaluation metrics.
 
-\begin{table}[h]
+\begin{table}[ht]
     \centering
     \begin{tabular}{ |l|c| } 
         \hline
