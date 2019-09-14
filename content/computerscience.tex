@@ -12,17 +12,17 @@ The study of such networks help in the understanding of human disease, mechanism
 
 \subsection{Biological Network Topology}
 
-The structure of the network plays an important role in analyzing and understanding its performance. The most common topological features (e.g., degree distribution, distance, clustering coefficient) are discussed below.
+The structure of a network plays an important role in analyzing and understanding its performance. The most common topological features (e.g., degree distribution, distance, clustering coefficient) are discussed below.
 
-The degree of a node is the number of relations it has, a node with high degree has a better connection in the network, therefore it plays a more important role in preserving the structure of the network.
-Biological networks usually consist of a small number of nodes that are highly connected (hubs), and a large number of nodes that have fewer connections, which is known as “scale-free” format \cite{zhu_getting_2007}.
+The degree of a node is the number of relations it has, a node with high degree has a better connection in the network, therefore it plays a more important role in preserving the network structure.
+Biological networks usually consist of a small number of nodes that are highly connected (hubs), and a large number of nodes that have fewer connections, which is known as “scale-free” format \cite{zhu_getting_2007}. This network format follows a power-law distribution $k^{-a}$ where k is the degree of a fraction of nodes and $a>1$ \cite{broido_scale-free_2019}.
 
 The distance between two nodes is defined as the shortest path length between them. On the other hand, the diameter of a network is the maximum path length between a pair of nodes.
 The approximate distance between nodes in a network can be measured by calculating the average distance and diameter. A network with small diameter means that two nodes are connected by relatively short paths, this type of graph is generally known as “small world” network \cite{zhu_getting_2007}.
 
 The clustering coefficient of a node is the percentage of existing relations among its neighborhood.
-It can be calculated by the number of edges between nodes in the neighborhood divided by the total number of edges that are possible between them.
-A “small world” network usually has a high clustering coefficient, which indicates that nodes in the network tend to form groups \cite{zhu_getting_2007}. 
+It can be calculated by the number of edges between nodes in the neighborhood divided by the total number of edges that are possible between them, which gives a value between 0 and 1.
+A “small world” network usually has a high clustering coefficient, which indicates that nodes in the network tend to form groups \cite{zhu_getting_2007}. On the other hand, a network that was created randomly has a low clustering coefficient, usually very close to 0 $(C \approx 0)$ \cite{newman_random_2002}.
 
 \section{Random Walk Representation Learning Methods}
 

@@ -24,7 +24,7 @@ To construct the complete graph, with drugs, targets and side effect, \ac{SIDER}
 \section{Experimental Runs}
 To find the best \ac{NRL} model for prediction, six different \ac{NRL} models (node2vec, DeepWalk, \ac{HOPE}, \ac{GraRep}, \ac{SDNE}, and \ac{LINE}) were ran and their hyperparameters were optimized. These models were used based on their application and performance in \cite{yue_graph_2019}. The best model was selected based on the collective evaluation results between all optimized models. 
 
-\subsection{\ac{NRL} Models}
+\subsection{NRL Models}
 To choose the best prediction model for the network, six different models from three categories were selected and tested. \ac{HOPE} and \ac{GraRep} were chosen from the matrix factorization approaches, \ac{LINE} and \ac{SDNE} were selected from the deep learning methods, and from random walk approaches DeepWalk and node2vec were chosen. All models were run using the BioNEV Python package \cite{yue_graph_2019}. The edges of the complete graph were split randomly to create the training and testing sets with a ratio of 8:2 respectively. Negative edges, which are edges that do not exist in the graph, for each set were also generated.
 
 \subsection{Edge Embeddings}
