@@ -1,0 +1,137 @@
+\chapter{Materials and Methods}
+\label{methods}
+
+This section explains the methods that have been used in the project. It describes how the network was built, the different \ac{NRL} models ran on the created network, the classifier used for prediction , and the metrics used to evaluate the models.
+
+\section{Network Construction}
+For the purpose of this thesis, a network of drugs-side effects-targets was constructed using two databases, \ac{SIDER} and DrugBank. To easily navigate through and extracted information from the databases, Bio2BEL framework, which integrates biological data using \ac{BEL}, was utilized \cite{hoyt_integration_2019}. RDKit\footnotemark was also used to calculate chemical similarities and create relation edges between drugs.
+\footnotetext{\url{http://www.rdkit.org}}
+
+\subsection{SIDER}
+The bio2bel\textunderscore sider Python package \cite{charles_tapley_hoyt_bio2bel/sider_2018} was used to download information from \ac{SIDER} database and convert the drugs, side effects, indications, and their interrelations into a \ac{BEL} graph. The resulting \ac{SIDER} graph contained 1,507 chemicals, identified with PubChem identifiers, and 6,990 side effect/indication, normalized using \ac{UMLS} terms. The total number of edges was 180,203.
+
+\subsection{DrugBank}
+DrugBank graph was built using bio2bel\textunderscore drugbank Python package \cite{charles_tapley_hoyt_bio2bel/drugbank_2018}. The package asks the user to register and download the full database from DrugBank website, then it uses the downloaded file to extract information and relations, which can then be converted to \ac{BEL} graph. The chemicals in the graph are labeled with PubChem identifier and the proteins are identified with uniprot identifiers. The total number of chemicals in the graph was 6,386 and the total number of proteins was 4,049. The graph also consisted of 43,589 edges.
+
+\subsection{Chemical Similarity Graph}
+The chemical similarity graph was created with the help of methods from RDKit, which is an open source toolkit for chemoinformatics. The molecules and their molecular fingerprints were identified and calculated using their \ac{SMILES} strings. The molecular fingerprints used here are MACCS keys, which contain 166 structural features of a molecule. Then, Tanimoto similarity metric is used to calculate the similarity between each node pair using their MACCS keys fingerprints. 
+
+Two different chemical similarity graphs were built. Two different chemical similarity graphs were built and tested, the first one was was created using pairwise similarities, in which and chemical pair that have more than 50\% similarity will have a relation, which resulted in 6,664 nodes and 1,738,887 edges in total. The second graph was built using clustering, in which all chemicals in the same cluster will have relations between one another. This was done by calculating the dissimilarity between fingerprints ($1 - similarity$), creating a distance matrix. The clustering was implemented by RDKit using Butina's clustering algorithm, which creates clusters that have centroids that are at least similar to every molecule in the cluster \cite{butina_unsupervised_1999}. This graph had a total of 5,529 nodes and 110,228 edges.
+
+\subsection{A Complete Graph}
+To construct the complete graph, with drugs, targets and side effect, \ac{SIDER}, DrugBank, and chemical similarity graphs were combined together; each similarity graph was combined with the complete graph seperatly, creating two different complete graphs. A mapping file was created from the DrugBank database containing the PubChem identifier, DrugBank identifier, and drug name. The mapping was also improved by adding the canonical \ac{SMILES} which were taken from PubChem API. The drugs from both graphs were merged using the SMILES to remove duplicated chemicals. The resulting graph had a total of 17,720 nodes; 4,049 proteins, 6,681 chemicals, and 6,990 side effects/indications. The relations that existed were chemical-protein, chemical-side effect/indication, and chemical-chemical.
+
+\section{Experimental Runs}
+To find the best \ac{NRL} model for prediction, six different \ac{NRL} models (node2vec, DeepWalk, \ac{HOPE}, \ac{GraRep}, \ac{SDNE}, and \ac{LINE}) were ran and their hyperparameters were optimized. These models were used based on their application and performance in \cite{yue_graph_2019}. The best model was selected based on the collective evaluation results between all optimized models. 
+
+\subsection{\ac{NRL} Models}
+To choose the best prediction model for the network, six different models from three categories were selected and tested. \ac{HOPE} and \ac{GraRep} were chosen from the matrix factorization approaches, \ac{LINE} and \ac{SDNE} were selected from the deep learning methods, and from random walk approaches DeepWalk and node2vec were chosen. All models were run using the BioNEV Python package \cite{yue_graph_2019}. The edges of the complete graph were split randomly to create the training and testing sets with a ratio of 8:2 respectively. Negative edges, which are edges that do not exist in the graph, for each set were also generated.
+
+\subsection{Edge Embeddings}
+To train the classifier to predict relations between two nodes, edge features need to be generated using the learned node embeddings. Table ~\ref{tab:operators} introduces a number of binary operators are generally used for such a task. 
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{ |l|l| } 
+        \hline
+        Hadamard & $\varepsilon(u,v)= \eta(u)*\eta(v)$ \\ 
+        \hline
+        Concatenation & $\varepsilon(u,v)=[\eta(u), \eta(v)]$ \\ 
+        \hline
+        Average & $\varepsilon(u,v)=0.5*(\eta(u)+\eta(v))$ \\ 
+        \hline
+        Weighted $L_{1}$ & $\varepsilon(u,v)=\mid\eta(u)-\eta(v)\mid$ \\
+        \hline
+        Weighted $L_{2}$ & $\varepsilon(u,v)=\mid\eta(u)-\eta(v)\mid^2$ \\
+        \hline
+    \end{tabular}
+    \caption[Example binary operators $\varepsilon(u,v)$ for embedding for $edge(u,v)$]{Example binary operators $\varepsilon(u,v)$ for embedding for $edge(u,v)$. Operators adapted from \cite{grover_node2vec:_2016}}
+    \label{tab:operators}
+\end{table}
+
+
+According to many representation learning experiments \cite{grover_node2vec:_2016, tsitsulin_verse:_2018, yuan_sne:_2017}, Hadamard operator produces the most stable and most accurate edge representation for multiple types of networks. Following that observation, the edge embeddings used for training the classifier in this thesis were calculated using this approach. In Hadamard operator, each element in the vector (u) is multiplied by the corresponding element in (v), such that the new vector (u,v) will be the product of (u) and (v). Other approaches, such as gat2vec and GuiltyTargets, used concatenation operator to generate edge features \cite{muslu_guiltytargets:_2019, sheikh_gat2vec:_2018}.
+
+\subsection{Hyperparameter Optimization}
+All models have gone through a hyperparameter optimization process. With the help of the optuna Python package \cite{akiba_optuna:_2019}, ranges for the hyperparameters were selected and a number of trials were run while randomly changing parameters to find the hyperparameters that maximize the Matthews correlation coefficient, explained in \ref{evaluation_section}. All hyperparameter ranges/values were chosen based on \cite{yue_graph_2019}. The ranges and values for the hyperparameters where chosen based on their role in the model and were taken from \cite{yue_graph_2019}.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{ |l|l|r| } 
+        \hline
+        \textbf{Method} & \textbf{Hyperparameters} & \textbf{Range/Value} \\
+        \hline
+        HOPE & Dimensions & 100 - 300 \\
+        \hline
+        \multirow{2}{5em}{GraRep} & Dimensions & 100 - 300 \\ 
+            & $k$-step & 1-10 \\ 
+        \hline
+        \multirow{3}{4em}{LINE} & Dimensions & 100 - 300 \\ 
+            & Proximity order & [1,2,3] \\
+            & Epochs & [5, 10, 15, 20, 25, 30] \\
+        \hline
+        \multirow{3}{5em}{SDNE} & Proximity balance ($\alpha$) & 0.0 - 0.4 \\ 
+            & Reconstruction weight ($\beta$) & 0 - 30 \\
+            & Epochs & [5, 10, 15, 20, 25, 30] \\
+        \hline
+        \multirow{4}{5em}{DeepWalk} & Dimensions & 100 - 300 \\ 
+            & Walk length & [$2^3, 2^4, 2^5, 2^6, 2^7$] \\
+            & Number of walks & [$2^3, 2^4, 2^5, 2^6, 2^7, 2^8$] \\
+            & Window size & 2 - 6 \\
+        \hline
+        \multirow{6}{5em}{node2vec} & Dimensions & 100 - 300 \\ 
+            & Walk length & [$2^3, 2^4, 2^5, 2^6, 2^7$] \\
+            & Number of walks & [$2^3, 2^4, 2^5, 2^6, 2^7, 2^8$] \\
+            & Window size & 2 - 6 \\
+            & Return parameter ($p$) & 0.0 - 4.0 \\
+            & In/out parameter ($q$) & 0.0 - 4.0 \\
+        \hline
+    \end{tabular}
+    \caption[Hyperparameters optimized for NRL methods]{Hyperparameters optimized for NRL methods. HOPE's only hyperparameter is the dimensions of the embeddings. GraRep need the dimensions and $k$-step parameters. LINE depend on the dimensions, proximity order and the epochs. SDNE has the $\alpha$, $\beta$ and the epochs parameters. DeepWalk depends on the dimensions, walk length, number of walks and the window size. Node2vec uses the same parameters as DeepWalk with the addition of the $p$ and $q$. All hyperparameter ranges/values were chosen based on \cite{yue_graph_2019}.} 
+    \label{tab:hyperparameters}
+\end{table}
+
+\section{Binary Classification}
+
+A logistic regression model was used for binary classification to predict edges between a given pair of nodes. The logistic regression is one of the most popular statistical models used for binary classification because it is simple, easy to interpret, and proven to perform well in many classification and prediction tasks.
+The results of the classifier are interpreted using two measures, $p$-value and minus log probability. The $p$-value is the probability that the null hypothesis is true. In this case, it is that a given edge does not exist between two nodes in the graph. The \ac{MLP} is also reported to enable easier interpretation. Generally, a $p$-value of less than 0.05, corresponding to an \ac{MLP} of greater than 1.3,  is considered to be significant. It is worth mentioning that in this thesis, the $p$-value is used mainly for ranking purposes.
+
+\section{Evaluation Metrics}
+\label{evaluation_section}
+To evaluate the performance of the predictive models, five evaluation metrics were calculated. The best performance was selected based on the overall evaluation results. The calculations depend on the number of true positives (TP), true negatives (TN), false positives (FP), and false negatives (FN). Table ~\ref{tab:evaluation} presents the calculations used in the evaluation metrics.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ |l|c| } 
+        \hline
+        \textbf{Metric} & \textbf{Definition} \\
+        \hline
+        Accuracy & $\frac{TP + TN}{TP + TN + FP + FN}$ \\ 
+        \hline
+        Precision & $\frac{TP}{TP + FP}$ \\
+        \hline
+        True Positive Rate (recall, sensitivity) & $\frac{TP}{TP + FN}$ \\ 
+        \hline
+        $F_{1}$ & $2 * \frac{Precision * Recall}{Precision + Recall}$ \\
+        \hline
+        False Positive Rate & $\frac{FP}{FP + TN}$ \\
+        \hline
+        \ac{MCC} & $\frac{(TP*TN)-(FP*FN)}{\sqrt{(TP + FP)(FN + TN)(FP + TN)(TN + FN)}}$ \\
+        \hline
+    \end{tabular}
+    \caption{Evaluation metrics definitions.}
+    \label{tab:evaluation}
+\end{table}
+
+The accuracy measure could give a good evaluation of how accurate the classifier is, however, it is not as useful if the data is imbalanced. For example, if most of the data belongs to one class, the classifier can predict that all the samples belong to that one class and still calculate a high accuracy value.
+
+Precision is the ratio of correct positive predictions (TP) to the total positive predictions. On the other hand, recall, or sensitivity, is the ratio of correct positive predictions (TP) to all predictions in the class. In other words, while the precision of a model is its ability to return only the relevant cases in the data set, the recall is the ability of the classifier to find all relevant cases in the data set. Thus, there is a trade-off between precision and recall of a model; if the recall increases, precision decreases.
+
+The $F_{1}$ score is defined as the balance between precision and recall. It is the harmonic mean of precision and recall and it is a good alternative to accuracy. An $F_{1}$ score close to 1 indicates low false positives and false negatives.
+
+The \ac{MCC} is a measure of quality of binary classification. Since \ac{MCC} uses all quantities produced from the data set (TP, TN, FP, FN), it provides a better summary of the performance of classifier. Thus, it is typically considered a balanced and robust measure which can be used even if the data is imbalance \cite{boughorbel_optimal_2017}.
+
+\subsection{The Area Under the Curve}
+
+\ac{ROC} curve plots the true positive rate (recall) against the false positive rate. The area under the \ac{ROC} curve (AUC-ROC) represents the measure of separability; the closer the AUC-ROC is to 1, the better is the model at distinguishing classes. However, the AUC-ROC can be misleading for comparing predictive distribution models \cite{lobo_auc:_2008}.
+Alternatively, the area under the precision-recall curve (AUC-PR) plots precision against recall to provide a more realistic evaluation on imbalanced data. The major difference between the two methods is how they account for the true negatives in the data set; if the number of negative samples is much less than the number of positive samples, then it is better to use precision-recall curve for evaluation since it does not consider the true negatives in its calculation so it will not be affected by the imbalance.
