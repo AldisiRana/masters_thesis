@@ -1,22 +1,31 @@
 \chapter{Conclusion and Future Work}
 \label{conclusion}
-This thesis has demonstrated how a chemical-target-phenotype network can be used in the prediction of indications, side effects, and in the analysis of drugs' mechanisms of action. 
+
+This thesis has demonstrated how a chemical-target-phenotype network can be used in the prediction of indications, side effects, and in the analysis of drugs' mechanisms of action.
+
 \section{Reflections}
-Constructing the network needed several preprocessing steps since some of PubChem compounds have different identifiers, which resulted in having duplicate nodes in the network. Because \ac{NRL} models were already implemented in the BioNEV Python package, using them did not pose any difficulty.
+
+Constructing the network needed several preprocessing steps since some of PubChem compounds have different identifiers, which resulted in having duplicate nodes in the network.
+Because \ac{NRL} models were already implemented in the BioNEV Python package, using them did not pose any difficulty.
 However, some modifications were necessary such as the inclusion of reports on additional evaluation metrics (e.g., AUC-PR and \ac{MCC}).
 Though the logistic regression classifier performed well in predictions, it would have been interesting to use other well-used classifiers like support vector machines as well as to compare their performances.
 
 \section{Limitations}
+
 Although the resulting predictive model has presented valuable associations between different entities, it has several limitations.
 One is that there is no directionality or polarity to the edges, which means that the model cannot differentiate between causality, association, positive correlations, or negative correlations.
 Moreover, it cannot differentiate between indications and side effects, which means it is not able to tell if the association between a chemical and phenotype is a treatment or an effect of the chemical.
 Another challenge the machine learning algorithms presented is that they are not formulated as online algorithms, and therefore cannot be easily updated without re-training - if the underlying data set is updated, the whole training process needs to be repeated.
 
 \section{Future Work}
+
 Though the prediction model was able to perform well, there is room for improvement.
 First, the predictive model can be further enriched by incorporating new data modalities, such as target-target interactions.
 Second, the implementation of the models embeddings could be enhanced by only training parts of the network at a time, this could be used as a way to create parallel implementation, or as a way to learn newly incorporated data modalities without re-training the whole network.
-Third, weighted edges could be incorporated to assign importance to edges depending on their significance, this could be especially useful in chemical-chemical similarity association, where an edge between two chemicals that share 60\% similarity will have more significance that an edge between two chemicals with 50\% similarity, for example. Another example is adding weighted edges between chemical-phenotype, such as more frequent phenotype would be more significant than infrequent or rare phenotypes.
-Finally, OpenTargets, a database that provides evidence for target-disease associations, could be used to validate target-phenotype relations that are predicted by the model. A further filtering step could be done after the prediction, where the literature co-occurrence of a given pair in predicted relation is calculated and the top predictions are ranked based on the highest co-occurrence frequency.
+Third, weighted edges could be incorporated to assign importance to edges depending on their significance, this could be especially useful in chemical-chemical similarity association, where an edge between two chemicals that share 60\% similarity will have more significance that an edge between two chemicals with 50\% similarity, for example.
+Another example is adding weighted edges between chemical-phenotype, such as more frequent phenotype would be more significant than infrequent or rare phenotypes.
+Finally, OpenTargets, a database that provides evidence for target-disease associations, could be used to validate target-phenotype relations that are predicted by the model.
+A further filtering step could be done after the prediction, where the literature co-occurrence of a given pair in predicted relation is calculated and the top predictions are ranked based on the highest co-occurrence frequency.
 
-This thesis has taken the first steps towards a reproducible workflow for the application of network representation in biomedical networks that might be useful for downstream tasks such as prediction, classification and clustering. The thesis’s original goal was to create and train a network that can be analyzed to understand drugs’ mechanism of action and be able to use that knowledge in predicting new relations, which was achieved with this workflow. 
+This thesis has taken the first steps towards a reproducible workflow for the application of network representation in biomedical networks that might be useful for downstream tasks such as prediction, classification and clustering.
+The thesis’s original goal was to create and train a network that can be analyzed to understand drugs’ mechanism of action and be able to use that knowledge in predicting new relations, which was achieved with this workflow.

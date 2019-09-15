@@ -2,9 +2,19 @@
 \label{results}
 
 \section{Data Preprocessing and Network Construction}
-The issue with combining different data sources is that sometimes they are inconsistent and/or incomplete, which is why data preprocessing is needed to create a sufficient network that can be used for prediction tasks. However, preprocessing of data can also mean the loss of incompatible yet important information. The main preprocessing task in this thesis was the merging of chemicals from the \ac{SIDER} and DrugBank graphs, although both graphs contained chemicals that were labeled with PubChem identifiers, some chemicals can have two or more different PubChem identifier, that can contain different stereochemistry or isotopes of the same compound. This resulted in having different nodes of the same chemical from the two different databases, which meant that the model would not be able to correctly predict relations for this chemical because they are not complete. To resolve this issue, the nodes of the chemicals were merged using their canonical \ac{SMILES}, which focuses on the topology of the compound and disregards its stereochemistry. However, another issue could emerge from this approach, since isomers from the same compound do not always elicit the same response, which could cause a different kind of problem in the predictions.
+The issue with combining different data sources is that sometimes they are inconsistent and/or incomplete, which is why data preprocessing is needed to create a sufficient network that can be used for prediction tasks.
+However, preprocessing of data can also mean the loss of incompatible yet important information.
+The main preprocessing task in this thesis was the merging of chemicals from the \ac{SIDER} and DrugBank graphs, although both graphs contained chemicals that were labeled with PubChem identifiers, some chemicals can have two or more different PubChem identifier, that can contain different stereochemistry or isotopes of the same compound.
+This resulted in having different nodes of the same chemical from the two different databases, which meant that the model would not be able to correctly predict relations for this chemical because they are not complete.
+To resolve this issue, the nodes of the chemicals were merged using their canonical \ac{SMILES}, which focuses on the topology of the compound and disregards its stereochemistry.
+However, another issue could emerge from this approach, since isomers from the same compound do not always elicit the same response, which could cause a different kind of problem in the predictions.
 
-The network was built first using two databases, \ac{SIDER} and DrugBank, which contained three types of nodes, chemicals, phenotypes, and targets, and two types of relations, chemical - phenotype, and chemical - target, in total. However, this was not enough to build a graph that is able to predict new relations, since it would not have enough relations to learn from. This is why chemical similarity, chemical - chemical, relations were added to the complete graph. the 50\% similarity complete graph was very well connected, because the similarity threshold was low, thus many of the chemicals had relations with one another. On the other hand, the clustered chemicals complete graph followed a power-law degree distribution, shown in Figure \ref{fig:degree_distribution}, which is a property of scale-free network format. The average clustering coefficient was 0.165 which indicates that the nodes are not in highly clustered but the network is not random.
+The network was built first using two databases, \ac{SIDER} and DrugBank, which contained three types of nodes, chemicals, phenotypes, and targets, and two types of relations, chemical - phenotype, and chemical - target, in total.
+However, this was not enough to build a graph that is able to predict new relations, since it would not have enough relations to learn from.
+This is why chemical similarity, chemical - chemical, relations were added to the complete graph.
+The 50\% similarity complete graph was very well connected, because the similarity threshold was low, thus many of the chemicals had relations with one another.
+On the other hand, the clustered chemicals complete graph followed a power-law degree distribution, shown in Figure \ref{fig:degree_distribution}, which is a property of scale-free network format.
+The average clustering coefficient of 0.165 indicates that while the nodes are not in highly clustered, the network is not random.
 
 \begin{figure}[h!]
     \centering
@@ -14,27 +24,54 @@ The network was built first using two databases, \ac{SIDER} and DrugBank, which 
 \end{figure}
 
 \section{Model Evaluation and Selection}
-Six different \ac{NRL} models (node2vec, DeepWalk, \ac{GraRep}, \ac{HOPE}, \ac{LINE}, and \ac{SDNE}) were evaluated and the approach that works best with the data set created for this thesis was selected. Translational distance-based models, TransH and TransR, were also trained and evaluated, however, they performed poorly on this kind of biological network. This might be because the network created for this thesis contains a large number of relations compared to the entities. Moreover, this network contains unbalanced relationships, e.g. many-to-one, one-to-many, and many-to-many, which might create a challenge for translational models to map n-side entities to suitable positions in the embedding space \cite{liang_predicting_2019}.
+Six different \ac{NRL} models (node2vec, DeepWalk, \ac{GraRep}, \ac{HOPE}, \ac{LINE}, and \ac{SDNE}) were evaluated and the approach that works best with the data set created for this thesis was selected.
+Translational distance-based models, TransH and TransR, were also trained and evaluated, however, they performed poorly on this kind of biological network.
+This might be because the network created for this thesis contains a large number of relations compared to the entities.
+Moreover, this network contains unbalanced relationships, e.g. many-to-one, one-to-many, and many-to-many, which might create a challenge for translational models to map n-side entities to suitable positions in the embedding space \cite{liang_predicting_2019}.
 
-Biological networks are usually sparse, noisy, and incomplete \cite{nickel_review_2016}, leading to challenges in identifying and understanding structures, patterns, and dynamics of the network \cite{wang_unsupervised_2016}. Furthermore, they can be heterogeneous and high dimensional, making the embedding task much more complicated. Hence, understanding the topology of the network to be analyzed is important to decide the preserved structural properties in the embeddings. In the case of biological networks, preserving both local and global structural properties seem to be the most fitting for a better analysis of the network \cite{su_network_2018}. This is true because biological networks are complex and usually contain essential information both locally and globally. Thus, the \ac{NRL} models were selected based on the fact that they can capture the local and global structures of the network to insure that they perform well enough.
+Biological networks are usually sparse, noisy, and incomplete \cite{nickel_review_2016}, leading to challenges in identifying and understanding structures, patterns, and dynamics of the network \cite{wang_unsupervised_2016}.
+Furthermore, they can be heterogeneous and high dimensional, making the embedding task much more complicated.
+Hence, understanding the topology of the network to be analyzed is important to decide the preserved structural properties in the embeddings.
+In the case of biological networks, preserving both local and global structural properties seem to be the most fitting for a better analysis of the network \cite{su_network_2018}.
+This is true because biological networks are complex and usually contain essential information both locally and globally.
+Thus, the \ac{NRL} models were selected based on the fact that they can capture the local and global structures of the network to insure that they perform well enough.
 
 \subsection{Trained Graph Selection}
-Both the complete graph with 50\% similarity relations and the complete graph with clusters relations were tried, and both performed well. However, the graph with 50\% similarities produced a lot of predictions that do not make sense, which could be related to the fact that the threshold for making an edge between two chemicals was low, creating many unnecessary relations that could contribute to an inaccurate prediction. The graph could have performed well because of its high inter-connectivity, which means that there is a high chance that an edge exists between any two given nodes. Thus, the complete graph with clusters relations was chosen for training and prediction.
 
-All the models went through 100 trials, hyperparameters were randomly selected at each run. For each method, a set of parameters that play a role in the embeddings generation were selected to be optimized. All the models, with the exception of SDNE, have embeddings dimensions, which is an important paramter to optimize since it will contain all the low-dimensional representations of the graph. In GraRep, $k$-step parameter indicates length of the longest path that the embeddings will contain. The selection of order in \ac{LINE} determines if the model will preserve the local structure (order=1), global structure (order=2), or both (order=3). The epochs in \ac{LINE} and \ac{SDNE} control the number of times the model will go through the training set. $\alpha$ and $\beta$ parameters determine the proximity and reconstruction weight, respectively, as mentioned previously in \ref{subsection:SDNE}. Random walk methods, DeepWalk and node2vec, use the walk length to control length of path, number of walks to determine how many paths are learned for each node, and the window size which determines the number of nodes that are captured on either sides of the target node. Additionally, node2vec has $p$ parameter, which determines the return probability and $q$ parameter, which controls if the path is going inward or outward, both parameters were dicussed previously in \ref{subsection:node2vec}.
+Both the complete graph with 50\% similarity relations and the complete graph with clusters relations were tried, and both performed well.
+However, the graph with 50\% similarities produced a lot of predictions that do not make sense, which could be related to the fact that the threshold for making an edge between two chemicals was low, creating many unnecessary relations that could contribute to an inaccurate prediction.
+The graph could have performed well because of its high inter-connectivity, which means that there is a high chance that an edge exists between any two given nodes.
+Thus, the complete graph with clusters relations was chosen for training and prediction.
 
-The training set was used to generate the embeddings for each \ac{NRL} model and to train the logistic regression, then the model was evaluated using the testing set. The best trial for each model was selected based on the highest \ac{MCC} score. This metric was chosen for the optimization because it is an unbiased and balanced measure that works on both balanced and unbalanced data sets, thus it is a more stable measure of performance.
+All the models went through 100 trials, hyperparameters were randomly selected at each run.
+For each method, a set of parameters that play a role in the embeddings generation were selected to be optimized.
+All the models, with the exception of SDNE, have embeddings dimensions, which is an important paramter to optimize since it will contain all the low-dimensional representations of the graph.
+In GraRep, $k$-step parameter indicates length of the longest path that the embeddings will contain.
+The selection of order in \ac{LINE} determines if the model will preserve the local structure (order=1), global structure (order=2), or both (order=3).
+The epochs in \ac{LINE} and \ac{SDNE} control the number of times the model will go through the training set.
+The $\alpha$ and $\beta$ parameters determine the proximity and reconstruction weight, respectively, as mentioned previously in \ref{subsection:SDNE}.
+Random walk methods (e.g., DeepWalk and node2vec) use the walk length to control length of path, number of walks to determine how many paths are learned for each node, and the window size which determines the number of nodes that are captured on either sides of the target node.
+Additionally, node2vec has $p$ parameter, which determines the return probability and $q$ parameter, which controls if the path is going inward or outward, both parameters were dicussed previously in \ref{subsection:node2vec}.
 
-Table \ref{tab:evaluation_results} presents the parameters and evaluation metrics for the best trial of each method. All models, with the excpetion of \ac{SDNE}, performed faily well, with AUC-ROC and AUC-PR of above 0.9, and MCC of above 0.8, however the model that performed the best was node2vec with AUC-ROC of 0.977, AUC-PR of 0.981, and \ac{MCC} of 0.877, which is why it was chosen to be the model used for prediction. Node2vec model worked best for this data set because of the hyperparameters selected. A window size of 4 and walk length of 8 were big enough to include nearby nodes and paths to learn and predict nodes that are not directly related (target - phenotype associations), but not too big as to include unnecessary relations. The number of walks made sure to learn the paths between nodes without overfitting the network so new predictions can be made. Furthermore, high $p$ and $q$ parameters ensured that the model would avoid revisting nodes yet it would be biased toward nodes that are closer to the previous node, which helped in capturing the local and global structures of the network.
+The training set was used to generate the embeddings for each \ac{NRL} model and to train the logistic regression, then the model was evaluated using the testing set.
+The best trial for each model was selected based on the highest \ac{MCC} score.
+This metric was chosen for the optimization because it is an unbiased and balanced measure that works on both balanced and unbalanced data sets, thus it is a more stable measure of performance.
+
+Table \ref{tab:evaluation_results} presents the parameters and evaluation metrics for the best trial of each method.
+All models, with the excpetion of \ac{SDNE}, performed faily well, with AUC-ROC and AUC-PR of above 0.9, and MCC of above 0.8, however the model that performed the best was node2vec with AUC-ROC of 0.977, AUC-PR of 0.981, and \ac{MCC} of 0.877, which is why it was chosen to be the model used for prediction.
+The node2vec model worked best for this data set because of the hyperparameters selected.
+A window size of 4 and walk length of 8 were big enough to include nearby nodes and paths to learn and predict nodes that are not directly related (target - phenotype associations), but not too big as to include unnecessary relations.
+The number of walks made sure to learn the paths between nodes without overfitting the network so new predictions can be made.
+Furthermore, high $p$ and $q$ parameters ensured that the model would avoid revisting nodes yet it would be biased toward nodes that are closer to the previous node, which helped in capturing the local and global structures of the network.
 
 \begin{table}[h!]
     \centering
     \small
-    \begin{tabular}{ |l|l|r|r|r|r| } 
+    \begin{tabular}{ |l|l|r|r|r|r| }
         \hline
         \textbf{Method} & \textbf{Parameters} & \textbf{Value} & \textbf{AUC-ROC} & \textbf{AUC-PR} & \textbf{\ac{MCC}} \\
         \hline
-        \multirow{6}{*}{node2vec} & Dimensions & 300 & \multirow{6}{*}{\textbf{0.977}} & \multirow{6}{*}{\textbf{0.981}} & \multirow{6}{*}{\textbf{0.877}} \\ 
+        \multirow{6}{*}{node2vec} & Dimensions & 300 & \multirow{6}{*}{\textbf{0.977}} & \multirow{6}{*}{\textbf{0.981}} & \multirow{6}{*}{\textbf{0.877}} \\
             & Walk length & 8 & & & \\
             & Number of walks & 8 & & & \\
             & Window size & 4 & & & \\
@@ -48,23 +85,25 @@ Table \ref{tab:evaluation_results} presents the parameters and evaluation metric
         \hline
         HOPE & Dimensions & 300 & 0.937 & 0.962 & 0.842 \\
         \hline
-        \multirow{2}{*}{GraRep} & Dimensions & 300 & \multirow{2}{*}{0.977} & \multirow{2}{*}{0.981} & \multirow{2}{*}{0.866} \\ 
-            & $k$-step & 3 & & & \\ 
+        \multirow{2}{*}{GraRep} & Dimensions & 300 & \multirow{2}{*}{0.977} & \multirow{2}{*}{0.981} & \multirow{2}{*}{0.866} \\
+            & $k$-step & 3 & & & \\
         \hline
-        \multirow{3}{*}{\ac{LINE}} & Dimensions & 300 & \multirow{3}{*}{0.979} & \multirow{3}{*}{0.983} & \multirow{3}{*}{0.869} \\ 
+        \multirow{3}{*}{\ac{LINE}} & Dimensions & 300 & \multirow{3}{*}{0.979} & \multirow{3}{*}{0.983} & \multirow{3}{*}{0.869} \\
             & Proximity order & 3 & & & \\
             & Epochs & 5 & & & \\
         \hline
-        \multirow{3}{*}{\ac{SDNE}} & Proximity balance ($\alpha$) & 0.128 & \multirow{3}{*}{0.927} & \multirow{3}{*}{0.949} & \multirow{3}{*}{0.648} \\ 
+        \multirow{3}{*}{\ac{SDNE}} & Proximity balance ($\alpha$) & 0.128 & \multirow{3}{*}{0.927} & \multirow{3}{*}{0.949} & \multirow{3}{*}{0.648} \\
             & Reconstruction weight ($\beta$) & 14 & & & \\
             & Epochs & 25 & & & \\
         \hline
     \end{tabular}
-    \caption[Evaluation results for the best NRL model]{Evaluation results for the best model in each \ac{NRL} method. The model with the best evaluation result is node2vec with AUC-ROC of 0.977, AUC-PR of 0.981, and \ac{MCC} of 0.877} 
+    \caption[Evaluation results for the best NRL model]{Evaluation results for the best model in each \ac{NRL} method. The model with the best evaluation result is node2vec with AUC-ROC of 0.977, AUC-PR of 0.981, and \ac{MCC} of 0.877}
     \label{tab:evaluation_results}
 \end{table}
 
-To check the randomness and robustness of the models, the training and evaluation of each model was repeated ten times. Figure \ref{fig:boxplot} shows the \ac{MCC} results of each of the models. These results, with the exception of SDNE, indicate that the models are not created randomly and are quiet robust.
+To check the randomness and robustness of the models, the training and evaluation of each model was repeated ten times.
+Figure~\ref{fig:boxplot} shows the \ac{MCC} results of each of the models.
+These results, with the exception of SDNE, indicate that the models are not created randomly and are quiet robust.
 
 \begin{figure}[h!]
     \centering
@@ -75,14 +114,22 @@ To check the randomness and robustness of the models, the training and evaluatio
 
 \section{Interpretation of Model Predictions}
 
-Node2vec final embeddings and logistic regression model were trained using the complete graph and exported to be used for predictions. The predictions were created by enquiring the name or identifier of a certain entity. Furthermore, the type of entities to be predicted could also be specified. Three types of relations could be predicted using the model, drug-phenotype, drug-target, or target-phenotype. For each relation predicted the $p$-value and \ac{MLP} value were calculated used for ranking. Since methods for drug-target associations, or drug target identification, are well developed, those association results were omitted from the interpretations. To validate the new predictions of the model, positive controls were also presented for drug-phenotype associations.
+Node2vec final embeddings and logistic regression model were trained using the complete graph and exported to be used for predictions.
+The predictions were created by enquiring the name or identifier of a certain entity.
+Furthermore, the type of entities to be predicted could also be specified.
+Three types of relations could be predicted using the model: drug-phenotype, drug-target, and target-phenotype.
+For each relation predicted, the $p$-value and \ac{MLP} value were calculated and used for ranking.
+Since methods for drug-target associations, or drug target identification, are well developed, those association results were omitted from the interpretations.
+To validate the new predictions of the model, positive controls were also presented for drug-phenotype associations.
 
 \subsection{Predicting the Phenotypes for a Drug}
-Predicting indications and side effects of a chemical is one of the most common types of tasks used with side effects networks. Table \ref{tab:drug_phenotype} presents the top ten predicted phenotypes for the antipsychotic drug, olanzapine.
+
+Predicting indications and side effects of a chemical is one of the most common types of tasks used with side effects networks.
+Table~\ref{tab:drug_phenotype} presents the top ten predicted phenotypes for the antipsychotic drug, olanzapine.
 
 \begin{table}[!ht]
     \centering
-    \begin{tabular}{|l|l|l|r|r|} 
+    \begin{tabular}{|l|l|l|r|r|}
         \hline
         \textbf{Namespace} & \textbf{Identifier} & \textbf{Name} & \textbf{$p$-value} & \textbf{MLP} \\
         \hline
@@ -111,9 +158,15 @@ Predicting indications and side effects of a chemical is one of the most common 
     \label{tab:drug_phenotype}
 \end{table}
 
-Olanzapine is an atypical antipsychotic drug that primarily acts on dopamine and serotonin receptors, and is used to treat schizophrenia and bipolar disorders \cite{thomas_olanzapine_2019}. A couple of case reports have presented cardiovascular problems that are associated with olanzapine treatement, one report mentioned that a patient treated with olanzapine experienced bundle branch block, which is a blockage or delay in electrical impulses of the heart \cite{ninan_case_2017}. Another case report presented a patient that suffered from cardiomyopathy after being treated with olanzapine \cite{puttegowda_olanzapine_2016}. Both phenotypes have been predicted with the model, and Figure \ref{fig:olanzapine_phenotypes} shows a subgraph representing some of the paths that are present in the network between olanzapine and three different predicted phenotypes, bundle branch block, cardiomyopathy and balance disorder, which indicate that the predictions could have been made from side-effect similarities.
+Olanzapine is an atypical antipsychotic drug that primarily acts on dopamine and serotonin receptors, and is used to treat schizophrenia and bipolar disorders \cite{thomas_olanzapine_2019}.
+Several case reports have presented cardiovascular problems that are associated with olanzapine treatement, one report mentioned that a patient treated with olanzapine experienced bundle branch block, which is a blockage or delay in electrical impulses of the heart \cite{ninan_case_2017}.
+Another case report presented a patient that suffered from cardiomyopathy after being treated with olanzapine \cite{puttegowda_olanzapine_2016}.
+Both phenotypes have been predicted with the model, and Figure \ref{fig:olanzapine_phenotypes} shows a subgraph representing some of the paths that are present in the network between olanzapine and three different predicted phenotypes, bundle branch block, cardiomyopathy and balance disorder, which indicate that the predictions could have been made from side-effect similarities.
 
-Studies have been done to investigate the effect of olanzapine, among other atypical antipsychotics, on cognitive function, including attention, memory and verbal learning and they have confirmed that olanzapine improves those cognitive functions in schizophrenia patients \cite{mcgurk_cognitive_2004, smith_effects_2001, cuesta_effects_2001, purdon_neuropsychological_2000, bilder_neurocognitive_2002}. The effect of antipsychotic drugs on the liver has also been studied and it was found that olanzapine can induce hepatic damage \cite{lv_antipsychotic_2018}. Both association with memory and liver injury were also predicted using the model. Positive controls of olnazapine-phenotype associations are presented in Table \ref{tab:ps_olanzapine}, those four phenotypes (nuchal rigidity, amenorrhoea, dysphagia, and priapism) are all present in \ac{SIDER} as side effects of olanzapine.
+Studies have been done to investigate the effect of olanzapine, among other atypical antipsychotics, on cognitive function, including attention, memory and verbal learning and they have confirmed that olanzapine improves those cognitive functions in schizophrenia patients \cite{mcgurk_cognitive_2004, smith_effects_2001, cuesta_effects_2001, purdon_neuropsychological_2000, bilder_neurocognitive_2002}.
+The effect of antipsychotic drugs on the liver has also been studied and it was found that olanzapine can induce hepatic damage \cite{lv_antipsychotic_2018}.
+Both association with memory and liver injury were also predicted using the model.
+Positive controls of olnazapine-phenotype associations are presented in Table~\ref{tab:ps_olanzapine}, those four phenotypes (nuchal rigidity, amenorrhoea, dysphagia, and priapism) are all present in \ac{SIDER} as side effects of olanzapine.
 
 \begin{figure}[h!]
     \centering
@@ -143,12 +196,15 @@ Studies have been done to investigate the effect of olanzapine, among other atyp
 
 
 \subsection{Predicting the Drugs for a Phenotype}
-The model can also be used to predict chemicals that can be associated with phenotypes. Here, it used to predict chemicals that might best affect \ac{PD}. 
-\ac{PD} is a progressive neurodegenerative disorder that affects motor and non-motor functions in variable degrees \cite{jankovic_parkinsons_2008}. Common motor features of \ac{PD} are tremor, rigidity, slowness (bradykinesia) and impaired balance, other PD symptoms include cognitive impairment and abnormal neurological behaviours \cite{jankovic_parkinsons_2008}. The top ten predictions of chemicals associated with \ac{PD} are shown in Table \ref{tab:phenotype_drug}.
+The model can also be used to predict chemicals that can be associated with phenotypes.
+Here, it used to predict chemicals that might best affect \ac{PD}, a progressive neurodegenerative disorder that affects motor and non-motor functions in variable degrees \cite{jankovic_parkinsons_2008}.
+Common motor features of \ac{PD} are tremord, rigidity, slowness (bradykinesia), and impaired balance.
+Other \ac{PD} symptoms include cognitive impairment and abnormal neurological behaviors \cite{jankovic_parkinsons_2008}.
+The top ten predictions of chemicals associated with \ac{PD} are shown in Table \ref{tab:phenotype_drug}.
 
 \begin{table}[h]
     \centering
-    \begin{tabular}{|l|l|l|r|r|} 
+    \begin{tabular}{|l|l|l|r|r|}
         \hline
         \textbf{Namespace} & \textbf{Identifier} & \textbf{Name} & \textbf{$p$-value} & \textbf{MLP} \\
         \hline
@@ -177,7 +233,14 @@ The model can also be used to predict chemicals that can be associated with phen
     \label{tab:phenotype_drug}
 \end{table}
 
-The prediction with the highest significance is escitalopram, a \ac{SSRI} and an $S$-enantiomer of citalopram that is used to treat major depression \cite{weintraub_escitalopram_2006}. Depression is a common complication of \ac{PD}; approximately 20\% to 40\% of \ac{PD} patients have depression and usually the antidepressant treatment of choice is an \ac{SSRI} \cite{weintraub_escitalopram_2006}. Though the efficacy of \ac{SSRI}s on depression in \ac{PD} has not been proven, some studies have found that they could be beneficial \cite{rampello_ssri_2002, hauser_sertraline_1997, ceravolo_paroxetine_2000, menza_citalopram_2004}. One of those studies investigated sertraline, which was also predicted by the model, and found it to be useful in treating depression in \ac{PD} \cite{hauser_sertraline_1997}. Another study evaluated citalopram and found that it can improve the depression symptoms of PD patients \cite{menza_citalopram_2004}. Escitalopram was also investigated and it was concluded that it may be a viable treatment for depression in PD, however more research needs to be conducted to confirm \cite{weintraub_escitalopram_2006, verma_efficacy_2012}. Escitalopram had many paths leading to its association with \ac{PD}, these paths were mostly created from side-effect similarities and target similarities between escitalopram and chemicals that are directly associated with \ac{PD}. Figure \ref{fig:parkinson_escitalopram} shows some of the paths that were found in the network.
+The prediction with the highest significance is escitalopram, a \ac{SSRI} and an $S$-enantiomer of citalopram that is used to treat major depression \cite{weintraub_escitalopram_2006}.
+Depression is a common complication of \ac{PD}; approximately 20\% to 40\% of \ac{PD} patients have depression and usually the antidepressant treatment of choice is an \ac{SSRI} \cite{weintraub_escitalopram_2006}.
+Though the efficacy of \ac{SSRI}s on depression in \ac{PD} has not been proven, some studies have found that they could be beneficial \cite{rampello_ssri_2002, hauser_sertraline_1997, ceravolo_paroxetine_2000, menza_citalopram_2004}.
+One of those studies investigated sertraline, which was also predicted by the model, and found it to be useful in treating depression in \ac{PD} \cite{hauser_sertraline_1997}.
+Another study evaluated citalopram and found that it can improve the depression symptoms of PD patients \cite{menza_citalopram_2004}.
+Escitalopram was also investigated and it was concluded that it may be a viable treatment for depression in PD, however more research needs to be conducted to confirm \cite{weintraub_escitalopram_2006, verma_efficacy_2012}.
+Escitalopram had many paths leading to its association with \ac{PD}, these paths were mostly created from side-effect similarities and target similarities between escitalopram and chemicals that are directly associated with \ac{PD}.
+Figure~\ref{fig:parkinson_escitalopram} shows some of the paths that were found in the network.
 
 \begin{figure}[h!]
     \centering
@@ -186,7 +249,13 @@ The prediction with the highest significance is escitalopram, a \ac{SSRI} and an
     \caption [Escitalopram-PD path subgraph]{\label{fig:parkinson_escitalopram} A subgraph showing some of the shortest relation paths between escitalopram and \ac{PD}}
 \end{figure}
 
-Quetiapine is an antipsychotic drug that has been used to treat schizophrenia and bipolar disorders. It is also used in off-label cases such as post-traumatic stress disorder, anxiety disorders, insomnia, and depression in Parkinson’s disease \cite{el-saifi_quetiapine_2016}, since SIDER is curated from drug labels, this kind of off-label use would not be in the training set. Many researches have investigated quetiapine for treating psychotic symptoms in \ac{PD}, which include delirium, hallucinations, depression, and insomnia among other psychiatric manifestations \cite{desmarais_quetiapine_2016}. Even though those studies have not been able to prove the efficacy of quetiapine on \ac{PD}, they suggest that the high dropout rate might have influenced the results and follow-up studies with larger sample size are required. Figure \ref{fig:parkinson_quetiapine} shows some of the paths in the network that were used to predict the association of quetiapine with \ac{PD}. It is evident from the figure that quetiapine share targets and chemical similarities with two chemicals, bromocriptine and memantine, that are directly associated with \ac{PD}. It is worth mentioning that the prediction of associtation between quetiapine and \ac{PD} was quiet consistent, appearing in the top 30 predictions with different predictive models (not shown). 
+Quetiapine is an antipsychotic drug that has been used to treat schizophrenia and bipolar disorders.
+It is also used in off-label cases such as post-traumatic stress disorder, anxiety disorders, insomnia, and depression in Parkinson’s disease \cite{el-saifi_quetiapine_2016}, since SIDER is curated from drug labels, this kind of off-label use would not be in the training set.
+Many researches have investigated quetiapine for treating psychotic symptoms in \ac{PD}, which include delirium, hallucinations, depression, and insomnia among other psychiatric manifestations \cite{desmarais_quetiapine_2016}.
+Even though those studies have not been able to prove the efficacy of quetiapine on \ac{PD}, they suggest that the high dropout rate might have influenced the results and follow-up studies with larger sample size are required.
+Figure~\ref{fig:parkinson_quetiapine} shows some of the paths in the network that were used to predict the association of quetiapine with \ac{PD}.
+It is evident from the figure that quetiapine share targets and chemical similarities with two chemicals, bromocriptine and memantine, that are directly associated with \ac{PD}.
+It is worth mentioning that the prediction of associtation between quetiapine and \ac{PD} was quiet consistent, appearing in the top 30 predictions with different predictive models (not shown).
 
 \begin{figure}[h!]
     \centering
@@ -195,7 +264,9 @@ Quetiapine is an antipsychotic drug that has been used to treat schizophrenia an
     \caption[Quetiapine-PD path subgraph]{\label{fig:parkinson_quetiapine} A subgraph showing the shortest relation paths between quetiapine and \ac{PD}.}
 \end{figure}
 
-A couple of the other predicted chemicals, pregabalin and ziprasidone, have been shown to cause or worsen symptoms of \ac{PD} \cite{perez_lloret_pregabalin-induced_2009, younce_systematic_2019}, while the rest of the predicted chemicals do not have any studies that prove their association with \ac{PD}. The positive controls for this association are shown in Table \ref{tab:ps_PD}. These four drugs, selegiline, aripiprazole, ropinirole and clomipramine are already used for treating \ac{PD} and are indicated as such in DrugBank, which is why their association with the disease exists in the network and they are expected to be predicted by the model.
+A couple of the other predicted chemicals, pregabalin and ziprasidone, have been shown to cause or worsen symptoms of \ac{PD} \cite{perez_lloret_pregabalin-induced_2009, younce_systematic_2019}, while the rest of the predicted chemicals do not have any studies that prove their association with \ac{PD}.
+The positive controls for this association are shown in Table \ref{tab:ps_PD}.
+These four drugs (i.e., selegiline, aripiprazole, ropinirole, and clomipramine) are already used for treating \ac{PD} and are indicated as such in DrugBank, which is why their association with the disease exists in the network and they are expected to be predicted by the model.
 
 \begin{table}
 \centering
@@ -217,11 +288,13 @@ pubchem.compound & 2801 & Clomipramine &  0.002 &  2.823 \\
 \end{table}
 
 \subsection{Predicting the Phenotypes for a Target }
-Another way to use the model is to predict the association of targets with phenotypes. Since there are no direct relations between targets and phenotypes in the network, the model depends on the indirect chemical-chemical, chemical-phenotype, and chemical-target relations to predict target-phenotype relations. Table \ref{tab:target_phenotype} presents predicted phenotypes that are associated with muscarinic 2 cholinergic receptor M2 (M2R).
+Another way to use the model is to predict the association of targets with phenotypes.
+Since there are no direct relations between targets and phenotypes in the network, the model depends on the indirect chemical-chemical, chemical-phenotype, and chemical-target relations to predict target-phenotype relations.
+Table~\ref{tab:target_phenotype} presents predicted phenotypes that are associated with muscarinic 2 cholinergic receptor M2 (M2R).
 
 \begin{table}[h]
     \centering
-    \begin{tabular}{ |l|l|l|r|r| } 
+    \begin{tabular}{ |l|l|l|r|r| }
         \hline
         \textbf{Namespace} & \textbf{Identifier} & \textbf{Name} & \textbf{$p$-value} & \textbf{MLP} \\
         \hline
@@ -250,7 +323,12 @@ Another way to use the model is to predict the association of targets with pheno
     \label{tab:target_phenotype}
 \end{table}
 
-M2R (uniprot entry name: ACM2\textunderscore HUMAN), encoded by CHRM2 gene, is a receptor belonging to the muscarinic receptors subclass, which contains 5 subtypes (M1-M5) \cite{kleinz_chapter_2008}. These receptors are responsible for recognizing the neurotransmitter acetylcholine and are involved in the cholinergic transduction in the central nervous system, basal ganglia, smooth muscles, and other parasympathetic end organs \cite{aronstam_muscarinic_2009}. A recent study has investigated the role of muscarinic receptors in \ac{TD} and concluded that there is an association between variations of CHRM2 and \ac{TD} \cite{boiko_pharmacogenetics_2019}. CHRM2 has also been associated with psychiatric and mood disorders such as schizophrenia and depression \cite{drevets_antidepressant_2013, jeon_role_2015, dean_possible_2015}. A common symptom of mood disorders is agitation, which is one of the phenotypes predicted by the model, furthermore, it has been shown that the inhibition of acetylcholine could cause agitation \cite{carlson_physiology_2019}. Figure \ref{fig:chrm2_phenotypes} shows a subgraph containing the shortest paths from three different phenotypes (agitation, drowsiness and \ac{TD}) to M2R, the paths mostly depend on target and phenotype similarities between drugs, under the assumption that if drugs with the same target have the same phenotype, the target could be the cause of the phenotype.
+M2R (uniprot entry name: ACM2\textunderscore HUMAN), encoded by CHRM2 gene, is a receptor belonging to the muscarinic receptors subclass, which contains 5 subtypes (M1-M5) \cite{kleinz_chapter_2008}.
+These receptors are responsible for recognizing the neurotransmitter acetylcholine and are involved in the cholinergic transduction in the central nervous system, basal ganglia, smooth muscles, and other parasympathetic end organs \cite{aronstam_muscarinic_2009}.
+A recent study has investigated the role of muscarinic receptors in \ac{TD} and concluded that there is an association between variations of CHRM2 and \ac{TD} \cite{boiko_pharmacogenetics_2019}.
+CHRM2 has also been associated with psychiatric and mood disorders such as schizophrenia and depression \cite{drevets_antidepressant_2013, jeon_role_2015, dean_possible_2015}.
+A common symptom of mood disorders is agitation, which is one of the phenotypes predicted by the model, furthermore, it has been shown that the inhibition of acetylcholine could cause agitation~\cite{carlson_physiology_2019}.
+Figure~\ref{fig:chrm2_phenotypes} shows a subgraph containing the shortest paths from three different phenotypes (agitation, drowsiness, and \ac{TD}) to M2R, the paths mostly depend on target and phenotype similarities between drugs, under the assumption that if drugs with the same target have the same phenotype, the target could be the cause of the phenotype.
 
 \begin{figure}[h!]
     \centering
@@ -261,11 +339,14 @@ M2R (uniprot entry name: ACM2\textunderscore HUMAN), encoded by CHRM2 gene, is a
 
 
 \section{Reproducibility and Software Implementation}
-The scripts and workflows developed in this thesis are available through the seffnet Python package through GitHub at \url{https://github.com/seffnet/seffnet}. Each of its components have been wrapped in a command line interface (CLI) such that the results presented in each section of this work (construction of the network, hyper-parameter optimization, prediction) can be generated with a corresponding command following the guidelines described by Grüning et al. \cite{gruning_software_2019}. 
-The seffnet Python package has a tool chain consisting of flake8 (\url{https://github.com/PyCQA/flake8}) to enforce code and documentation quality, setuptools (\url{https://github.com/pypa/setuptools}) to build distributions, pyroma (\url{https://github.com/regebro/pyroma}) to enforce package metadata standards and tox (\url{https://github.com/tox-dev/tox}) as a build tool to facilitate the usage of each of these tools in a reproducible way. It leverages community and open source resources to improve its usability by using Travis-CI (\url{https://travis-ci.com} ) as a continuous integration service.
+The scripts and workflows developed in this thesis are available through the seffnet Python package through GitHub at \url{https://github.com/seffnet/seffnet}.
+Each of its components have been wrapped in a command line interface (CLI) such that the results presented in each section of this work (construction of the network, hyper-parameter optimization, prediction) can be generated with a corresponding command following the guidelines described by Grüning \textit{et al.}~\cite{gruning_software_2019}.
+The seffnet Python package has a tool chain consisting of flake8 (\url{https://github.com/PyCQA/flake8}) to enforce code and documentation quality, setuptools (\url{https://github.com/pypa/setuptools}) to build distributions, pyroma (\url{https://github.com/regebro/pyroma}) to enforce package metadata standards and tox (\url{https://github.com/tox-dev/tox}) as a build tool to facilitate the usage of each of these tools in a reproducible way.
+It leverages community and open source resources to improve its usability by using Travis-CI (\url{https://travis-ci.com} ) as a continuous integration service.
 
 \section{SEffNet: A Web Application for Link Prediction}
-The best machine learning model from the workflow was wrapped with a web application using the Flask Python package (\url{https://github.com/pallets/flask}). It allows users to enter the entity of interest and the types of predictions they want to see (Figure \ref{fig:web_page}) then lists the top results (Figure \ref{fig:protein_prediction}).
+The best machine learning model from the workflow was wrapped with a web application using the Flask Python package (\url{https://github.com/pallets/flask}).
+It allows users to enter the entity of interest and the types of predictions they want to see (Figure \ref{fig:web_page}) then lists the top results (Figure \ref{fig:protein_prediction}).
 
 \begin{figure}[h!]
     \centering
@@ -283,4 +364,5 @@ The best machine learning model from the workflow was wrapped with a web applica
 \footnotetext{\url{https://pharmacome.scai.fraunhofer.de}}
 
 
-Because the web application relies on a logistic regression model, predictions are nearly instantaneous. Additionally, the web application also includes an application programming interface (API) that can be used programmatically and incorporated as a microservice in other workflows.
+Because the web application relies on a logistic regression model, predictions are nearly instantaneous.
+Additionally, the web application also includes an application programming interface (API) that can be used programmatically and incorporated as a microservice in other workflows.
