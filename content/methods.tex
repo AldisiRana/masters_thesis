@@ -7,19 +7,20 @@ It describes how the network was built, the different \ac{NRL} models ran on the
 \section{Network Construction}
 
 For the purpose of this thesis, a network of drugs-side effects-targets was constructed using two databases, \ac{SIDER} and DrugBank.
-To easily navigate through and extracted information from the databases, Bio2BEL framework, which integrates biological data using \ac{BEL}, was utilized \cite{hoyt_integration_2019}.
+To easily navigate through and extracted information from the databases, Bio2BEL framework, which integrates biological data using \ac{BEL}, was utilized~\cite{hoyt_integration_2019}.
 RDKit\footnotemark was also used to calculate chemical similarities and create relation edges between drugs.
 \footnotetext{\url{http://www.rdkit.org}}
 
 \subsection{SIDER}
-The bio2bel\textunderscore sider Python package \cite{charles_tapley_hoyt_bio2bel/sider_2018} was used to download information from \ac{SIDER} database and convert the drugs, side effects, indications, and their interrelations into a \ac{BEL} graph.
+The bio2bel\textunderscore sider Python package~\cite{charles_tapley_hoyt_bio2bel/sider_2018} was used to download information from \ac{SIDER} database and convert the drugs, side effects, indications, and their interrelations into a \ac{BEL} graph.
 The resulting \ac{SIDER} graph contained 1,507 chemicals, identified with PubChem identifiers, and 6,990 side effect/indication, normalized using \ac{UMLS} terms.
 The total number of edges was 180,203.
 
 \subsection{DrugBank}
 
-DrugBank graph was built using bio2bel\textunderscore drugbank Python package \cite{charles_tapley_hoyt_bio2bel/drugbank_2018}\.The package asks the user to register and download the full database from DrugBank website, then it uses the downloaded file to extract information and relations, which can then be converted to \ac{BEL} graph.
-The chemicals in the graph are labeled with PubChem identifier and the proteins are identified with uniprot identifiers.
+DrugBank graph was built using bio2bel\textunderscore drugbank Python package~\cite{charles_tapley_hoyt_bio2bel/drugbank_2018}.
+The package asks the user to register and download the full database from DrugBank website, then it uses the downloaded file to extract information and relations, which can then be converted to \ac{BEL} graph.
+The chemicals in the graph are labeled with PubChem identifier and the proteins are identified with UniProt identifiers.
 The total number of chemicals in the graph was 6,386 and the total number of proteins was 4,049.
 The graph also consisted of 43,589 edges.
 
@@ -33,7 +34,7 @@ Then, Tanimoto similarity metric is used to calculate the similarity between eac
 Two different chemical similarity graphs were built and tested, the first one was created using pairwise similarities, in which chemical pair that have more than 50\% similarity will have a relation, this resulted in a graph of 6,664 nodes and 1,738,887 edges in total.
 The second graph was built using clustering, in which all chemicals in the same cluster will have relations between one another.
 This was done by calculating the dissimilarity between fingerprints ($1 - similarity$), creating a distance matrix.
-The clustering was implemented by RDKit using Butina's clustering algorithm, which creates clusters that have centroids that are at least similar to every molecule in the cluster \cite{butina_unsupervised_1999}.
+The clustering was implemented by RDKit using Butina's clustering algorithm, which creates clusters that have centroids that are at least similar to every molecule in the cluster~\cite{butina_unsupervised_1999}.
 This graph had a total of 5,529 nodes and 110,228 edges.
 
 \subsection{A Complete Graph}
@@ -48,14 +49,14 @@ The relations that existed were chemical-protein, chemical-side effect/indicatio
 \section{Experimental Runs}
 
 To find the best \ac{NRL} model for prediction, six different \ac{NRL} models (node2vec, DeepWalk, \ac{HOPE}, \ac{GraRep}, \ac{SDNE}, and \ac{LINE}) were ran and their hyperparameters were optimized.
-These models were used based on their application and performance in \cite{yue_graph_2019}.
+These models were used based on their application and performance in~\cite{yue_graph_2019}.
 The best model was selected based on the collective evaluation results between all optimized models.
 
 \subsection{\ac{NRL} Models}
 
 To choose the best prediction model for the network, six different models from three categories were selected and tested.
 \ac{HOPE} and \ac{GraRep} were chosen from the matrix factorization approaches, \ac{LINE} and \ac{SDNE} were selected from the deep learning methods, and from random walk approaches, DeepWalk and node2vec were chosen.
-All models were run using the BioNEV Python package \cite{yue_graph_2019}.
+All models were run using the BioNEV Python package~\cite{yue_graph_2019}.
 To evaluate the models, the edges of the complete graph were split randomly to create the training and testing sets with a ratio of 8:2 respectively.
 Negative edges, which are edges that do not exist in the graph, for each set were also generated.
 
@@ -79,21 +80,21 @@ Table~\ref{tab:operators} introduces a number of binary operators that are gener
         Weighted $L_{2}$ & $\varepsilon(u,v)=\mid\eta(u)-\eta(v)\mid^2$ \\
         \hline
     \end{tabular}
-    \caption[Example binary operators $\varepsilon(u,v)$ for embedding for $edge(u,v)$]{Example binary operators $\varepsilon(u,v)$ for embedding for $edge(u,v)$. Operators adapted from \cite{grover_node2vec:_2016}}
+    \caption[Example binary operators $\varepsilon(u,v)$ for embedding for edge $(u,v) \in E$]{Example binary operators $\varepsilon(u,v)$ for embedding for edge $(u,v) \in E$. Operators adapted from~\cite{grover_node2vec:_2016}}
     \label{tab:operators}
 \end{table}
 
 
-According to many representation learning experiments \cite{grover_node2vec:_2016, tsitsulin_verse:_2018, yuan_sne:_2017}, Hadamard operator produces the most stable and most accurate edge representation for multiple types of networks.
+According to many representation learning experiments~\cite{grover_node2vec:_2016, tsitsulin_verse:_2018, yuan_sne:_2017}, Hadamard operator produces the most stable and most accurate edge representation for multiple types of networks.
 Following that observation, the edge embeddings used for training the classifier in this thesis were calculated using this approach.
 In Hadamard operator, each element in the vector ($u$) is multiplied by the corresponding element in ($v$), such that the new vector ($u,v$) will be the product of ($u$) and ($v$).
-Other approaches, such as gat2vec and GuiltyTargets, used concatenation operator to generate edge features \cite{muslu_guiltytargets:_2019, sheikh_gat2vec:_2018}.
+Other approaches, such as gat2vec and GuiltyTargets, used concatenation operator to generate edge features~\cite{muslu_guiltytargets:_2019, sheikh_gat2vec:_2018}.
 
 \subsection{Hyperparameter Optimization}
 
 All models have gone through a hyperparameter optimization process.
-With the help of the optuna Python package \cite{akiba_optuna:_2019}, ranges for the hyperparameters were selected and a number of trials were run while randomly changing parameters to find the hyperparameters that maximize the Matthews correlation coefficient, explained in \ref{evaluation_section}.
-The ranges and values for the hyperparameters where chosen based on their role in the model and were taken from \cite{yue_graph_2019}.
+With the help of the optuna Python package~\cite{akiba_optuna:_2019}, ranges for the hyperparameters were selected and a number of trials were run while randomly changing parameters to find the hyperparameters that maximize the Matthews correlation coefficient, explained in~\ref{evaluation_section}.
+The ranges and values for the hyperparameters where chosen based on their role in the model and were taken from~\cite{yue_graph_2019}.
 
 \begin{table}[ht!]
     \centering
@@ -127,7 +128,7 @@ The ranges and values for the hyperparameters where chosen based on their role i
         & In/out parameter ($q$) & 0.0 - 4.0 \\
         \hline
     \end{tabular}
-    \caption[Hyperparameters optimized for network representation learning methods]{Hyperparameters optimized for \ac{NRL} methods. HOPE's only hyperparameter is the dimensions of the embeddings. GraRep need the dimensions and $k$-step parameters. LINE depend on the dimensions, proximity order and the epochs. SDNE has the $\alpha$, $\beta$ and the epochs parameters. DeepWalk depends on the dimensions, walk length, number of walks and the window size. Node2vec uses the same parameters as DeepWalk with the addition of the $p$ and $q$. All hyperparameter ranges/values were chosen based on \cite{yue_graph_2019}.}
+    \caption[Hyperparameters optimized for network representation learning methods]{Hyperparameters optimized for \ac{NRL} methods. HOPE's only hyperparameter is the dimensions of the embeddings. GraRep need the dimensions and $k$-step parameters. LINE depend on the dimensions, proximity order and the epochs. SDNE has the $\alpha$, $\beta$ and the epochs parameters. DeepWalk depends on the dimensions, walk length, number of walks and the window size. Node2vec uses the same parameters as DeepWalk with the addition of the $p$ and $q$. All hyperparameter ranges/values were chosen based on~\cite{yue_graph_2019}.}
     \label{tab:hyperparameters}
 \end{table}
 
@@ -186,12 +187,12 @@ An $F_{1}$ score close to 1 indicates low false positives and false negatives.
 
 The \ac{MCC} is a measure of quality of binary classification.
 Since \ac{MCC} uses all quantities produced from the data set (TP, TN, FP, FN), it provides a better summary of the performance of classifier.
-Thus, it is typically considered a balanced and robust measure which can be used even if the data is imbalance \cite{boughorbel_optimal_2017}.
+Thus, it is typically considered a balanced and robust measure which can be used even if the data is imbalance~\cite{boughorbel_optimal_2017}.
 
 \subsection{The Area Under the Curve}
 
 \ac{ROC} curve plots the true positive rate (recall) against the false positive rate.
 The \ac{AUC-ROC} represents the measure of separability; the closer the AUC-ROC is to 1, the better is the model at distinguishing classes.
-However, the AUC-ROC can be misleading for comparing predictive distribution models \cite{lobo_auc:_2008}.
+However, the AUC-ROC can be misleading for comparing predictive distribution models~\cite{lobo_auc:_2008}.
 Alternatively, the \ac{AUC-PR} plots precision against recall to provide a more realistic evaluation on imbalanced data.
 The major difference between the two methods is how they account for the true negatives in the data set; if the number of negative samples is much less than the number of positive samples, then it is better to use precision-recall curve for evaluation since it does not consider the true negatives in its calculation so it will not be affected by the imbalance.
