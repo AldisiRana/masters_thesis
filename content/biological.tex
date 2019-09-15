@@ -1,57 +1,56 @@
 \chapter{Biological Background}
 \label{ch:biological}
 
-Drug development and discovery is a time-consuming and expensive process that has a low success rate, and bringing a single drug to market can take 10-15 years and billions of dollars \cite{arrowsmith_phase_2011, arrowsmith_phase_2013}.
-Even with the recent increase in research on drug development, the number of new therapeutic chemical and biological entities that have been approved by the United States \ac{FDA} has been decreasing since the late 1990s \cite{wang_exploring_2014}.
+Drug development and discovery is a time-consuming and expensive process that has a low success rate, and bringing a single drug to market can take 10-15 years and billions of dollars~\cite{arrowsmith_phase_2011, arrowsmith_phase_2013}.
+Even with the recent increase in research on drug development, the number of new therapeutic chemical and biological entities that have been approved by the United States \ac{FDA} has been decreasing since the late 1990s~\cite{wang_exploring_2014}.
 
 Drug repositioning (i.e., drug repurposing) is the process of discovering new therapeutic benefits for existing drugs.
 Repositioning offers several advantages over the drug discovery and development process.
 In many cases, repositioning candidates have passed many stages of drug development such as screening, chemical optimization, and even clinical development, thus they would have well-known safety and pharmacokinetic profiles.
-Therefore, repositioning provides a faster pathway to the market in which several years of drug design, development, and clinical stages can be removed \cite{ashburn_drug_2004}
+Therefore, repositioning provides a faster pathway to the market in which several years of drug design, development, and clinical stages can be removed~\cite{ashburn_drug_2004}
 
 \section{Drugs, Targets, and Side Effects}
 
 \subsection{Drugs}
 
-A drug is described as a chemical, or substance, that is applied to a physiological system that can affect its function is a certain way \cite{rang_rang_2014}.
-A drug can be used for the purpose of diagnosis, relief, prevention or cure of a pathological state \cite{satoskar_pharmacology_1973}.
+A drug is described as a chemical or substance that when applied to a physiological system can affect its function in a certain way~\cite{rang_rang_2014}.
+A drug can be used for the purpose of diagnosis, relief, prevention, or cure of a pathological state~\cite{satoskar_pharmacology_1973}.
 
 \subsection{Targets}
 
-A target, drug target or biological target, refers to protein, peptide or nucleic acid that has an activity which can be modified by a drug \cite{gashaw_what_2011}.
-An ideal drug target should have a proven role in the pathology of a disease, and its modulation does not have a significant role in other diseases or under normal conditions.
-In theory, it should also have a biomarker to be monitored for measuring therapeutic efficacy \cite{gashaw_what_2011}.
+A target refers to protein, peptide, or nucleic acid that has an activity which can be modified by a drug~\cite{gashaw_what_2011}.
+Ideally, one should have a proven role in the pathology of a disease, and its modulation does not have a significant role in other diseases or under normal conditions.
+It should also have a biomarker that can be monitored for measuring therapeutic efficacy~\cite{gashaw_what_2011}.
 
 \subsection{Side Effects}
 
 Even though drugs are taken for their therapeutic effects, they also have the potential risk of being harmful.
-Since drugs’ effect inside the body is not only limited to the drug target, sometimes, it can cause an unintended medical reaction in the body, this is what is known as a side effect, or adverse drug events \cite{pourpak_understanding_2008}.
-The cause of such effects to happen is unknown, however, some intrinsic risk factors have been suggested for their developments such as age, gender, weight, genetics, and state of health.
-It could also be related to extrinsic factors like the dosage of the drug, the route of administration, or taking multiple drugs at the same time \cite{pourpak_understanding_2008}.
+Since drugs’ effect inside the body are not only limited to their intended targets, sometimes, they can cause unintended medical reactions in the body.
+These are known as a side effects, or adverse drug events~\cite{pourpak_understanding_2008}.
+While their causes generally lack a mechanistic understanding, some intrinsic risk factors have been suggested for their developments such as age, gender, weight, genetics, and state of health.
+They could also be affected by extrinsic factors like the dosage of the drug, the route of administration, or taking multiple drugs at the same time~\cite{pourpak_understanding_2008}.
 
 \section{Biological Data Sources}
 
-Since biological data is highly heterogeneous, it is stored in a numerous different data sources, each of which has its own data structure and query interface \cite{baralis_exploring_2008}.
-Biological data sources available are abundant, ranging from gene and protein resources, like the \ac{HGNC} \cite{baralis_exploring_2008} and UniProt \cite{noauthor_uniprot:_2019}, to biomedical literature resources and ontologies, like PubMed Central \cite{roberts_pubmed_2001} and \ac{GO} \cite{noauthor_gene_2008}.
+Because biological data is highly heterogeneous, it can be found in numerous data sources, each of which has its own data structure and query interface~\cite{baralis_exploring_2008}.
+Biological data sources available are abundant, ranging from gene and protein resources, like the \ac{HGNC}~\cite{baralis_exploring_2008} and UniProt~\cite{noauthor_uniprot:_2019}, to biomedical literature resources and ontologies, like PubMed Central~\cite{roberts_pubmed_2001} and \ac{GO}~\cite{noauthor_gene_2008}.
 However, since biological systems are complicated and biological entities are connected, using one biological data source might not be sufficient to answer complex biological questions.
-Thus, data integration methods need to be applied to extract knowledge from different biological resources in order to comprehensively analyze biological systems \cite{baralis_exploring_2008}.
+Thus, data integration methods need to be applied to extract knowledge from different biological resources in order to comprehensively analyze biological systems~\cite{baralis_exploring_2008}.
 
 \subsection{Chemicals Resources}
 
 \subsubsection{DrugBank}
 
-DrugBank is a comprehensive chemical database containing  molecular information on drugs, their associated mechanisms, their interactions, and their targets.
-This database does not only contain information about \ac{FDA}-approved drugs, but also experimental and investigational drugs.
-As of 2018, DrugBank contains 11,926 drugs, more than 6,000 of which are \ac{FDA}-approved.
+DrugBank is a comprehensive chemical database containing molecular information on drugs, their associated mechanisms, their interactions, and their targets~\cite{wishart_drugbank_2018}.
+This database not only contains information about \ac{FDA}-approved drugs, but also experimental and investigational drugs.
+As of 2018, DrugBank contained 11,926 drugs;~more than 6,000 of which were (at the time) \ac{FDA}-approved.
 Furthermore, the database contains physico-chemical, pharmacological, pharmacogenomic, pharmacokinetic and molecular biological data of drugs and their targets, as well as drug-drug interactions, drug-food interactions, and drug transporter data.
-All these information are taken from more than 27,000 peer-reviewed papers and are manually extracted and curated.
-Thus, DrugBank is an excellent reference resource for the general public, educators, researchers, pharmacologists, and pharmaceutical industry \cite{wishart_drugbank_2018}.
+All these information were manually extracted and curated from more than 27,000 peer-reviewed articles.
 
 \subsubsection{PubChem}
 
-PubChem is a U.S. \ac{NCBI} resource containing chemical information \cite{kim_pubchem_2019}.
-It incorporates three inter-linked databases: the PubChem Substance database, which consists of chemical information submitted by data contributors, the PubChem Compound database, which stores the extracted chemical structure for the Substance database \cite{kim_pubchem_2016}, and BioAssay database, which consists of biological assay experiments’ descriptions and results \cite{kim_pubchem_2019}.
-As of its 2019 publication, PubChem contains more than 247.3 million substance descriptions, more than 96.5 million different chemical structures, and bioactivity assays covering over 10,000 proteins \cite{kim_pubchem_2019}.
+PubChem is a United States \ac{NCBI} resource that contains three inter-linked databases: the PubChem Substance database, which consists of chemical information submitted by data contributors, the PubChem Compound database, which stores the extracted chemical structure for the Substance database~\cite{kim_pubchem_2016}, and BioAssay database, which consists of biological assay experiments’ descriptions and results~\cite{kim_pubchem_2019}.
+As of its 2019 publication, PubChem contains more than 247.3 million substance descriptions, more than 96.5 million different chemical structures, and bioactivity assays covering over 10,000 proteins~\cite{kim_pubchem_2019}.
 
 \subsection{Side Effects Resources}
 
@@ -59,73 +58,72 @@ As of its 2019 publication, PubChem contains more than 247.3 million substance d
 
 \ac{SIDER} is a public database that contains information about drugs and their side effects.
 It contains 888 drugs, 1,450 side effects, and more than 62,000 drug-side effect relations.
-The side effect information was compiled mainly from the US \ac{FDA}, among other public resources, and the drug names were mapped to PubChem identifiers to enable linking to other databases \cite{kuhn_side_2010}.
+The side effect information was compiled mainly from the United States \ac{FDA}, among other public resources, and the drug names were mapped to PubChem identifiers to enable linking to other databases~\cite{kuhn_side_2010}.
 
 \subsection{Other Resources}
 
-The problem with data integration of biological data sources is the differences in terminology between them, which means that making them interoperable is a challenge.
-For that reason, controlled vocabularies such as \ac{MeSH} and the \ac{UMLS} have been developed to standardize terminology between different resources \cite{bodenreider_unified_2004}.
+One challenge in data integration of biological data sources is the differences in terminology between them.
+Controlled vocabularies such as \ac{MeSH} and the \ac{UMLS} have been developed to standardize terminology between different resources~\cite{bodenreider_unified_2004} to address this challenge.
 
 \subsubsection{Medical Subject Headings}
 
-\ac{MeSH} is a controlled vocabulary that was developed by The US \ac{NLM}.
-It describes many biomedical concepts, like chemicals, drugs and diseases, to index the Medical Literature Analysis and Retrieval System Online (MEDLINE), a database for biomedical literature \cite{huang_recommending_2011}.
-The headings in \ac{MeSH} are arranged in a tree structure with main headings (e.g., Anatomy, Diseases, Organism) are branches that have many levels of sub-branches.
-This hierarchy permits the search to include narrow terms in all the below branches when searching for a broad term \cite{noauthor_introduction_nodate}.
+\ac{MeSH} is a controlled vocabulary that was developed by the United States \ac{NLM}.
+It describes many biomedical concepts such as chemicals, drugs, and diseases in order to support indexing the Medical Literature Analysis and Retrieval System Online (MEDLINE), a database for biomedical literature~\cite{huang_recommending_2011}.
+The headings in \ac{MeSH} are arranged in a hierarchical tree structure with main headings (e.g., Anatomy, Diseases, Organism) and branches that have many levels of sub-branches.
+This hierarchy permits searches of MEDLINE to include narrow terms in all the below branches when searching for a broad term~\cite{noauthor_introduction_nodate}.
 
 \subsubsection{Unified Medical Language System}
 
 \ac{UMLS} is a freely available resource, developed by \ac{NLM}, that consists of biomedical vocabularies.
-It includes \ac{GO}, Online Mendelian Inheritance in Man \cite{amberger_omim.org:_2015}, \ac{MeSH}, \ac{NCBI} taxonomy, and the Anatomist Symbolic Knowledge Base \cite{rosse_motivation_1998}.
-\ac{UMLS} terms are inter-related and are cross-references to internal or external resources \cite{bodenreider_unified_2004}.
-It also consists of a metathesaurus of inter-related concepts and a semantic network that categorizes the metathesaurus concepts as well as lexical resources that generate lexical variants of the concepts \cite{bodenreider_unified_2004}.
+It includes \ac{GO}, Online Mendelian Inheritance in Man~\cite{amberger_omim.org:_2015}, \ac{MeSH}, \ac{NCBI} taxonomy, and the Anatomist Symbolic Knowledge Base~\cite{rosse_motivation_1998}.
+\ac{UMLS} terms are inter-related and are cross-references to internal or external resources~\cite{bodenreider_unified_2004}.
+It also consists of a metathesaurus of inter-related concepts and a semantic network that categorizes the metathesaurus concepts as well as lexical resources that generate lexical variants of the concepts~\cite{bodenreider_unified_2004}.
 
 \section{Related Work}
 
 Many studies have been conducted to discover the relationship between a given drug and its side effects, or the side effects of a drug and the link to indication areas, or the side effects of a drug and the link to different (off-) targets.
-For example, \ac{SIDER} was primarily created to combine drugs and their side effects information to analyze and investigate them \cite{kuhn_side_2010}.
-In an attempt to investigate side effects, Scheiber \textit{et al.} used a chemical space to map adverse reactions by extracting chemical features that are highly correlated to a specific effect \cite{scheiber_mapping_2009}.
-For every side effect term used, all associated molecules were extracted from PharmaPendium\footnotemark and the similarities between the side effects were then calculated using Pearson correlation after creating the chemical space from molecular descriptors of the molecules extracted.
-It was concluded that common side effects of drugs can be associated with common chemical structures \cite{scheiber_mapping_2009}.
-\footnotetext{\url{https://www.pharmapendium.com}}
+For example, \ac{SIDER} was primarily created to combine drugs and their side effects information to analyze and investigate them~\cite{kuhn_side_2010}.
+In an attempt to investigate side effects, Scheiber \textit{et al.} used a chemical space to map adverse reactions by extracting chemical features that are highly correlated to a specific effect~\cite{scheiber_mapping_2009}.
+For every side effect term used, all associated molecules were extracted from PharmaPendium\footnote{\url{https://www.pharmapendium.com}} and the similarities between the side effects were then calculated using Pearson correlation after creating the chemical space from molecular descriptors of the molecules extracted.
+The authors concluded that common side effects of drugs can be associated with common chemical structures~\cite{scheiber_mapping_2009}.
 
 \subsection{Prediction of Side Effects}
 
-Although there are clinical experiments that are done to discover side effects, they are usually expensive and may lead to incomplete reflection of all adverse reaction events.
-Furthermore, this could cause side effects being reported after the drug is introduced to the market, which can have severe consequences on patients \cite{dimitri_drugclust:_2017}.
-Thus, side effects are significantly responsible for drug failure during clinical trials; which is why it is essential for the commercial success of the drugs to create approaches for predicting and countering those side effects during the developmental phase \cite{mizutani_relating_2012}.
+Although clinical trials can reveal drugs' side effects, they are usually expensive and may lead to incomplete reflection of all adverse reaction events.
+Furthermore, this does not preclude the discovery of side effects after the drug is introduced to the market, which can have severe consequences on patients~\cite{dimitri_drugclust:_2017}.
+
+Side effects are significantly responsible for drug failure during clinical trials, which is why it is essential for the commercial success of the drugs to create approaches for predicting and countering those side effects during the developmental phase~\cite{mizutani_relating_2012}.
 Most of the developed approaches for detecting side effects of drugs are based on the fact that chemically similar drugs induce similar side effects.
-However, since drugs induce multiple effects on the biological system, it is challenging to discover the underlying mechanism of side effects \cite{dimitri_drugclust:_2017}.
+However, since drugs induce multiple effects on the biological system, it is challenging to discover the underlying mechanism of side effects~\cite{dimitri_drugclust:_2017}.
 
 Atias and Sharan (2011) applied a canonical correlation analysis to obtain a low dimensional subspace, which contains associations of drugs and side effects and molecular information of drugs.
-This allowed the identification of side effects that best correlates with a drug query that is introduced to the subspace, then side effect similarity network was used to obtain the final scores that are based on side effects of drugs that are similar to the query \cite{atias_algorithmic_2011}.
-A similar method used sparse canonical correlation analysis to find the correlation between chemical substructures of molecules and side effects \cite{pauwels_predicting_2011}.
+This allowed the identification of side effects that best correlates with a drug query that is introduced to the subspace, then side effect similarity network was used to obtain the final scores that are based on side effects of drugs that are similar to the query~\cite{atias_algorithmic_2011}.
+A similar method used sparse canonical correlation analysis to find the correlation between chemical substructures of molecules and side effects~\cite{pauwels_predicting_2011}.
 A more recent approach, DrugClust, used machine learning methods to cluster drugs based on their chemical features then obtains side effects prediction based on calculated Bayesian scores\cite{dimitri_drugclust:_2017}.
 
 \subsection{Identification of Drugs' Targets}
 
-Many approaches have been created for identifying novel targets for a drug, usually using chemical similarities or cellular features \cite{campillos_drug_2008}.
-However, the side effects of the drug can also be beneficial in such task; since these side effects can be happening because the drug bound an off-target causing unexpected reaction in a metabolic or signalling pathway \cite{lotfi_shahreza_review_2018}.
-Although these unexpected reactions caused by the off-targets are often harmful and undesirable, they can sometimes lead to beneficial discoveries, like finding new therapeutic indications for drugs \cite{campillos_drug_2008}.
+Many approaches have been created for identifying novel targets for a drug, usually using chemical similarities or cellular features~\cite{campillos_drug_2008}.
+However, the side effects of the drug can also be beneficial in such task because these side effects may be due to the drug binding an off-target causing unexpected reaction in a metabolic or signalling pathway~\cite{lotfi_shahreza_review_2018}.
+Although these unexpected reactions caused by the off-targets are often harmful and undesirable, they can sometimes lead to beneficial discoveries, like finding new therapeutic indications for drugs~\cite{campillos_drug_2008}.
 For example, thalidomide, a drug that was prescribed as a treatment for morning sickness in pregnant women in the 1950s, was the cause of more that 10,000 babies born with birth deficits.
-However, it was later discovered that thalidomide is an angiogenesis inhibitor, and because of that, it is currently used for treating cancers like multiple myeloma \cite{vargesson_thalidomideinduced_2015}.
+However, it was later discovered that thalidomide is an angiogenesis inhibitor and it was repurposed for treating cancers like multiple myeloma~\cite{vargesson_thalidomideinduced_2015}.
 
 Approaches using side effects to predict drug targets rely on the assumption that similar side effects of dissimilar drugs are caused by a common off-target.
 This is generally because drugs that have similar binding profiles tend to cause similar side effects, suggesting a direct correlation between target binding and side effects similarity.
 An example of that are the two drugs cisapride and astemizole, which have serotonin and histamine receptors as their primary targets, respectively.
-Both of those two unrelated drugs inhibit hERG, the cardiac ion channel, causing cardiac arrhythmias \cite{campillos_drug_2008}.
+Both of those two unrelated drugs inhibit hERG, the cardiac ion channel, causing cardiac arrhythmias~\cite{campillos_drug_2008}.
 Campillos \textit{et al.} inferred molecular activities of drugs by exploiting the side effects of marketed drugs rather than their chemical similarities or their known targets.
-Thus, they measured the side effect similarities of the marketed drugs and analyzed their likelihood of sharing protein targets.
-Ultimately, it was found out that indeed side effect similarity can indicate common protein targets of unrelated drugs \cite{campillos_drug_2008}.
+They then measured the side effect similarities of the marketed drugs and analyzed their likelihood of sharing protein targets and concluded that indeed side effect similarity can indicate common protein targets of unrelated drugs~\cite{campillos_drug_2008}.
 
 In another study, a large-scale analysis was used to identify protein-side effect relations by integrating drug-target and drug-side effect relations.
 This approach predicted that the activation of serotonin receptor family is associated with hyperaesthesia, which is the increase in pain sensitivity.
-To confirm this prediction, a serotonin receptor, HTR7 (5-hydroxytryptamine receptor 7), was tested on mice to see if it elicits hyperaesthesia, and the results suggested that it is indeed the case \cite{kuhn_systematic_2014}.
+To confirm this prediction, a serotonin receptor, HTR7 (5-hydroxytryptamine receptor 7), was tested on mice to see if it elicits hyperaesthesia, and the results suggested that it is indeed the case~\cite{kuhn_systematic_2014}.
 All these successful studies support the assumption that side effects of drugs can be used to identify drugs' targets.
 
 \subsection{Drug Repositioning}
 
 Side effects can also be used as phenotypic biomarkers for diseases because both indications and side effects are measurable physiological changes in response to drugs.
-Therefore, if drugs used for the treatment of a disease have common side effects, an underlying mechanism of action might be linking the disease and the side effects \cite{yang_systematic_2011}.
-Yang and Agarwal used this reasoning to build a disease-side effect association database from drug-side effect and drug-disease data, taken from \ac{SIDER} and PharmGKB respectively, which can be used for predicting new indications for marketed drugs \cite{yang_systematic_2011}.
-In a slightly different approach, a drug-drug relationship network was constructed using side effect similarities, which was then used to predict new indications of drugs according to their network neighbors \cite{ye_construction_2014}.
+Therefore, if drugs used for the treatment of a disease have common side effects, an underlying mechanism of action might be linking the disease and the side effects~\cite{yang_systematic_2011}.
+Yang and Agarwal used this reasoning to build a disease-side effect association database from drug-side effect and drug-disease data, taken from \ac{SIDER} and PharmGKB respectively, which can be used for predicting new indications for marketed drugs~\cite{yang_systematic_2011}.
+In a slightly different approach, a drug-drug relationship network was constructed using side effect similarities, which was then used to predict new indications of drugs according to their network neighbors~\cite{ye_construction_2014}.

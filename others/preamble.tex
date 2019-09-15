@@ -2,38 +2,38 @@
 
 % Acronyms. See: http://mirrors.ibiblio.org/CTAN/macros/latex/contrib/acro/acro_en.pdf
 \usepackage{acro}
-\usepackage{mathpazo}   								%used to modify font
-\usepackage[T1]{fontenc}								%used to allow T1-based fonts in latex (more glyphs I think)
-\usepackage[utf8]{inputenc}								%used to specify to latex that the file in coded as UTF-8 (ó)
+\usepackage{mathpazo}                                %used to modify font
+\usepackage[T1]{fontenc}                                %used to allow T1-based fonts in latex (more glyphs I think)
+\usepackage[utf8]{inputenc}                                %used to specify to latex that the file in coded as UTF-8 (ó)
 \usepackage[acronym, nomain, nonumberlist]{glossaries}
-\usepackage{indentfirst}								%used to indent the first paragraph of each section
-\usepackage{microtype} 									%used to disable ligatures
-\usepackage{xcolor}										%used to color font
+\usepackage{indentfirst}                                %used to indent the first paragraph of each section
+\usepackage{microtype}                                    %used to disable ligatures
+\usepackage{xcolor}                                        %used to color font
 \usepackage{paralist}%used to add inline lists inside paragraphs (inparaenum command)
 \usepackage{csquotes}
-\usepackage{graphicx}									%used to add figures
-\usepackage[]{hyperref}	% used for autoref, linking ref to the object and so links are not a different color
+\usepackage{graphicx}                                    %used to add figures
+\usepackage[]{hyperref}    % used for autoref, linking ref to the object and so links are not a different color
 %\usepackage[a4paper,includeall,bindingoffset=20mm,margin=2cm,marginparsep=0cm,marginparwidth=0cm]{geometry}				%used to specify margins and such
 \usepackage[left=3cm, right=3cm]{geometry}
-\usepackage{setspace}									%used for the stretch comman in caption
-\usepackage{pdfpages}									%used to include pdfs directly
-\usepackage{newunicodechar}								%used to solve a bib file problem where it couldn't display (U+2212)
-\usepackage{textcomp}									%used for micro symbol (upright mu)
-\usepackage{chngcntr}									%used for continuous numbering of figures
-\usepackage{titlesec}									%used to modify chapter headings
-\usepackage[titles]{tocloft}							%used to modify toc formatting
+\usepackage{setspace}                                    %used for the stretch comman in caption
+\usepackage{pdfpages}                                    %used to include pdfs directly
+\usepackage{newunicodechar}                                %used to solve a bib file problem where it couldn't display (U+2212)
+\usepackage{textcomp}                                    %used for micro symbol (upright mu)
+\usepackage{chngcntr}                                    %used for continuous numbering of figures
+\usepackage{titlesec}                                    %used to modify chapter headings
+\usepackage[titles]{tocloft}                            %used to modify toc formatting
 % https://texblog.org/2012/12/21/multi-column-and-multi-row-cells-in-latex-tables/
 \usepackage{multirow}
 % used to format the captions
-\usepackage[font={small, stretch=1.15},labelfont=bf, singlelinecheck=false]{caption}			
+\usepackage[font={small, stretch=1.15},labelfont=bf, singlelinecheck=false]{caption}
 % used for bibliography information
 \usepackage[
-    citestyle=chem-acs,
-    maxbibnames=5,
-    doi=false,
-    isbn=false,
-    url=false,
-    backend=biber
+citestyle=chem-acs,
+maxbibnames=5,
+doi=false,
+isbn=false,
+url=false,
+backend=biber
 ]{biblatex}
 \usepackage{fancyhdr} % Necessary to modify footer and page numbering
 \usepackage{url}
@@ -63,8 +63,8 @@
 
 % set the spaces before and after the chapter heading for numberless chapters
 % to make the abstract fit to one page (else one line is left hanging)
-\titlespacing*{name=\chapter,numberless}{0pt}{45pt}{10pt}  
-                                                           
+\titlespacing*{name=\chapter,numberless}{0pt}{45pt}{10pt}
+
 
 % the first is the “unknown minus” (U+2212), the second is a hyphen
 % Added because there was a problem in the bib file, but I couldn't find any −
@@ -72,13 +72,13 @@
 
 \captionsetup{justification=centering}                  %making the captions center
 
-\counterwithout{figure}{chapter}						%making Figure number not reset at chapter start
-\counterwithout{table}{chapter}						%making Table number not reset at chapter start
-\setcounter{tocdepth}{0}								% Allow only \chapter in ToC
-\renewcommand{\thefigure}{\arabic{figure}}				%change caption numbering to not use chapter number
-\renewcommand{\thetable}{\arabic{table}}				%change caption numbering to not use chapter number
-\renewcommand{\theequation}{\arabic{equation}}				%change caption numbering to not use chapter number
-\frenchspacing											%used so the space after a sentence is not longer than usual
+\counterwithout{figure}{chapter}                        %making Figure number not reset at chapter start
+\counterwithout{table}{chapter}                        %making Table number not reset at chapter start
+\setcounter{tocdepth}{0}                                % Allow only \chapter in ToC
+\renewcommand{\thefigure}{\arabic{figure}}                %change caption numbering to not use chapter number
+\renewcommand{\thetable}{\arabic{table}}                %change caption numbering to not use chapter number
+\renewcommand{\theequation}{\arabic{equation}}                %change caption numbering to not use chapter number
+\frenchspacing                                            %used so the space after a sentence is not longer than usual
 % Make font in bibliography smaller
 %\renewcommand*{\bibfont}{\small}
 
