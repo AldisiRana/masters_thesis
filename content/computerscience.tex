@@ -66,8 +66,8 @@ It learns word representations by calculating their ratio of the co-occurrence p
 DeepWalk is an unsupervised scalable representation learning model that learns latent representations by obtaining information from short random walks.
 The algorithm of the model consists of two main steps:
 \begin{enumerate}[1.]
-\item Perform random walks on the nodes in the graph and generate short sequences of nodes
-\item Run SkipGram using the paths generated in the first step to learn features of nodes and create node embeddings.
+    \item Perform random walks on the nodes in the graph and generate short sequences of nodes
+    \item Run SkipGram using the paths generated in the first step to learn features of nodes and create node embeddings.
 \end{enumerate}
 The model also uses hierarchical softmax to approximate the probability distribution, since using softmax as an activation function would be computationally expensive, with a computation time of $O(|V|)$.
 In hierarchical softmax, a binary tree, with the nodes of the graph as leaves, is utilized to deal with the computation problem by factorizing the conditional probability.
@@ -148,8 +148,9 @@ The two generalized singular values vectors can be combined and then used along 
 \ac{GraRep} learns the different $k$-step relation information with different $k$ values among nodes form the graph by utilizing different global transition matrices defined over the graph.
 In this model, nodes with common $k$-step neighbors should have similar latent features \cite{cao_grarep:_2015}.
 The method starts by creating three matrices, an adjacency matrix $S$, which indicates the presence or absence of edges between given node pair, degree matrix $D$, which contains information about the number of connections each node has, and 1-step probability transition matrix $A$ which indicates the probability of transition between node pair within one step.
-\begin{equation} \label{eq:grarep_01}
-A = D^{-1}S
+\begin{equation}
+    \label{eq:grarep_01}
+    A = D^{-1}S
 \end{equation}
 $k$-step transition probability matrix for each $k$-step can be computed.
 Where $A^{k}_{i,j}$ refers to the transition probability between $v_{i}$ and $v_{j}$ in which the transition contains exactly $k$-step(s).
@@ -157,7 +158,7 @@ For each $k$-step, the positive log probability matrix is produced and represent
 
 \subsection{Deep Learning Methods}
 
-While the previously described methods perform poorly on large and real world information networks and face challenges in handling non-linear data structures \cite{cui_survey_2017}, deep learning methods solve these issues by incorporating autoencoders, which contain multiple nonlinear functions,  and deep neural networks, which are robust and effective because of their multi-layered architecture \cite{cai_comprehensive_2017}.
+While the previously described methods perform poorly on large and real world information networks and face challenges in handling non-linear data structures \cite{cui_survey_2017}, deep learning methods solve these issues by incorporating autoencoders, which contain multiple nonlinear functions, and deep neural networks, which are robust and effective because of their multi-layered architecture \cite{cai_comprehensive_2017}.
 These kind of models have been used in tasks like utilizing electronic health records for risk prediction \cite{cheng_risk_2016}, and predicting polypharmacological side effects \cite{zitnik_modeling_2018}.
 
 \subsubsection{LINE}
@@ -169,8 +170,9 @@ First-order proximity, which is the local pairwise proximity between nodes in th
 Where $u_{i}$ is the low-dimensional representation (vector) of the node $v_{i}$.
 The objective function is optimized by minimizing the difference between two probability distributions.
 First-order proximity can only be applied to undirected edges in this model \cite{tang_line:_2015}.
-\begin{equation} \label{eq:line_01}
-p_{1}(v_{i}, v_{j}) = \frac{1}{1+ \exp{(-u_{i}^T .u_{j})}}
+\begin{equation}
+    \label{eq:line_01}
+    p_{1}(v_{i}, v_{j}) = \frac{1}{1+ \exp{(-u_{i}^T .u_{j})}}
 \end{equation}
 
 Second-order proximity assumes that nodes with many connections to other nodes are similar to each other.
@@ -179,8 +181,9 @@ For each edge$(i,j)$, the conditional distribution of "context" $v_{i}$ is defin
 Where $u_{i}$ is the representation of the node $v_{i}$ itself while $u_{i}^{'}$ is the representation of the node as "context" to other nodes and $|V|$ is the number of nodes or "contexts".
 Similar to first-order proximity, the objective function of the second-order proximity is calculated by minimizing the difference between two probability distributions \cite{tang_line:_2015}.
 
-\begin{equation} \label{eq:line_02}
-p_{2}(v_{i}| v_{j}) = \frac{\exp(u_{j}^{'T} .u_{i})}{\sum_{k=1}^{|V|} \exp{(u_{k}^{'T} .u_{i})}}
+\begin{equation}
+    \label{eq:line_02}
+    p_{2}(v_{i}| v_{j}) = \frac{\exp(u_{j}^{'T} .u_{i})}{\sum_{k=1}^{|V|} \exp{(u_{k}^{'T} .u_{i})}}
 \end{equation}
 
 The model can preserve both the first-order and second-order proximity by concatenating the embedding trained by both methods for each node \cite{tang_line:_2015}.

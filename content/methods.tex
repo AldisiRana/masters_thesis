@@ -66,13 +66,13 @@ Table~\ref{tab:operators} introduces a number of binary operators that are gener
 
 \begin{table}[h!]
     \centering
-    \begin{tabular}{ |l|l| } 
+    \begin{tabular}{ |l|l| }
         \hline
-        Hadamard & $\varepsilon(u,v)= \eta(u)*\eta(v)$ \\ 
+        Hadamard & $\varepsilon(u,v)= \eta(u)*\eta(v)$ \\
         \hline
-        Concatenation & $\varepsilon(u,v)=[\eta(u), \eta(v)]$ \\ 
+        Concatenation & $\varepsilon(u,v)=[\eta(u), \eta(v)]$ \\
         \hline
-        Average & $\varepsilon(u,v)=0.5*(\eta(u)+\eta(v))$ \\ 
+        Average & $\varepsilon(u,v)=0.5*(\eta(u)+\eta(v))$ \\
         \hline
         Weighted $L_{1}$ & $\varepsilon(u,v)=\mid\eta(u)-\eta(v)\mid$ \\
         \hline
@@ -97,37 +97,37 @@ The ranges and values for the hyperparameters where chosen based on their role i
 
 \begin{table}[ht!]
     \centering
-    \begin{tabular}{ |l|l|r| } 
+    \begin{tabular}{ |l|l|r| }
         \hline
         \textbf{Method} & \textbf{Hyperparameters} & \textbf{Range/Value} \\
         \hline
         HOPE & Dimensions & 100 - 300 \\
         \hline
-        \multirow{2}{5em}{GraRep} & Dimensions & 100 - 300 \\ 
-            & $k$-step & 1-10 \\ 
+        \multirow{2}{5em}{GraRep} & Dimensions & 100 - 300 \\
+        & $k$-step & 1-10 \\
         \hline
-        \multirow{3}{4em}{LINE} & Dimensions & 100 - 300 \\ 
-            & Proximity order & [1,2,3] \\
-            & Epochs & [5, 10, 15, 20, 25, 30] \\
+        \multirow{3}{4em}{LINE} & Dimensions & 100 - 300 \\
+        & Proximity order & [1,2,3] \\
+        & Epochs & [5, 10, 15, 20, 25, 30] \\
         \hline
-        \multirow{3}{5em}{SDNE} & Proximity balance ($\alpha$) & 0.0 - 0.4 \\ 
-            & Reconstruction weight ($\beta$) & 0 - 30 \\
-            & Epochs & [5, 10, 15, 20, 25, 30] \\
+        \multirow{3}{5em}{SDNE} & Proximity balance ($\alpha$) & 0.0 - 0.4 \\
+        & Reconstruction weight ($\beta$) & 0 - 30 \\
+        & Epochs & [5, 10, 15, 20, 25, 30] \\
         \hline
-        \multirow{4}{5em}{DeepWalk} & Dimensions & 100 - 300 \\ 
-            & Walk length & [$2^3, 2^4, 2^5, 2^6, 2^7$] \\
-            & Number of walks & [$2^3, 2^4, 2^5, 2^6, 2^7, 2^8$] \\
-            & Window size & 2 - 6 \\
+        \multirow{4}{5em}{DeepWalk} & Dimensions & 100 - 300 \\
+        & Walk length & [$2^3, 2^4, 2^5, 2^6, 2^7$] \\
+        & Number of walks & [$2^3, 2^4, 2^5, 2^6, 2^7, 2^8$] \\
+        & Window size & 2 - 6 \\
         \hline
-        \multirow{6}{5em}{node2vec} & Dimensions & 100 - 300 \\ 
-            & Walk length & [$2^3, 2^4, 2^5, 2^6, 2^7$] \\
-            & Number of walks & [$2^3, 2^4, 2^5, 2^6, 2^7, 2^8$] \\
-            & Window size & 2 - 6 \\
-            & Return parameter ($p$) & 0.0 - 4.0 \\
-            & In/out parameter ($q$) & 0.0 - 4.0 \\
+        \multirow{6}{5em}{node2vec} & Dimensions & 100 - 300 \\
+        & Walk length & [$2^3, 2^4, 2^5, 2^6, 2^7$] \\
+        & Number of walks & [$2^3, 2^4, 2^5, 2^6, 2^7, 2^8$] \\
+        & Window size & 2 - 6 \\
+        & Return parameter ($p$) & 0.0 - 4.0 \\
+        & In/out parameter ($q$) & 0.0 - 4.0 \\
         \hline
     \end{tabular}
-    \caption[Hyperparameters optimized for network representation learning methods]{Hyperparameters optimized for \ac{NRL} methods. HOPE's only hyperparameter is the dimensions of the embeddings. GraRep need the dimensions and $k$-step parameters. LINE depend on the dimensions, proximity order and the epochs. SDNE has the $\alpha$, $\beta$ and the epochs parameters. DeepWalk depends on the dimensions, walk length, number of walks and the window size. Node2vec uses the same parameters as DeepWalk with the addition of the $p$ and $q$. All hyperparameter ranges/values were chosen based on \cite{yue_graph_2019}.} 
+    \caption[Hyperparameters optimized for network representation learning methods]{Hyperparameters optimized for \ac{NRL} methods. HOPE's only hyperparameter is the dimensions of the embeddings. GraRep need the dimensions and $k$-step parameters. LINE depend on the dimensions, proximity order and the epochs. SDNE has the $\alpha$, $\beta$ and the epochs parameters. DeepWalk depends on the dimensions, walk length, number of walks and the window size. Node2vec uses the same parameters as DeepWalk with the addition of the $p$ and $q$. All hyperparameter ranges/values were chosen based on \cite{yue_graph_2019}.}
     \label{tab:hyperparameters}
 \end{table}
 
@@ -139,7 +139,7 @@ The results of the classifier are interpreted using two measures, $p$-value and 
 The $p$-value is the probability that the null hypothesis is true.
 In this case, it is that a given edge does not exist between two nodes in the graph.
 The \ac{MLP} is also reported to enable easier interpretation.
-Generally, a $p$-value of less than 0.05, corresponding to an \ac{MLP} of greater than 1.3,  is considered to be significant.
+Generally, a $p$-value of less than 0.05, corresponding to an \ac{MLP} of greater than 1.3, is considered to be significant.
 It is worth mentioning that in this thesis, the $p$-value is mainly for ranking purposes.
 
 \section{Evaluation Metrics}\label{evaluation_section}
@@ -151,15 +151,15 @@ Table~\ref{tab:evaluation} presents the calculations used in the evaluation metr
 
 \begin{table}[ht]
     \centering
-    \begin{tabular}{ |l|c| } 
+    \begin{tabular}{ |l|c| }
         \hline
         \textbf{Metric} & \textbf{Definition} \\
         \hline
-        Accuracy & $\frac{TP + TN}{TP + TN + FP + FN}$ \\ 
+        Accuracy & $\frac{TP + TN}{TP + TN + FP + FN}$ \\
         \hline
         Precision & $\frac{TP}{TP + FP}$ \\
         \hline
-        True Positive Rate (recall, sensitivity) & $\frac{TP}{TP + FN}$ \\ 
+        True Positive Rate (recall, sensitivity) & $\frac{TP}{TP + FN}$ \\
         \hline
         $F_{1}$ & $2 * \frac{Precision * Recall}{Precision + Recall}$ \\
         \hline

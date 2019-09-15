@@ -67,37 +67,37 @@ Furthermore, high $p$ and $q$ parameters ensured that the model would avoid revi
 \begin{table}[h!]
     \centering
     \small
-    \begin{tabular}{ |l|l|r|r|r|r| } 
+    \begin{tabular}{ |l|l|r|r|r|r| }
         \hline
         \textbf{Method} & \textbf{Parameters} & \textbf{Value} & \textbf{AUC-ROC} & \textbf{AUC-PR} & \textbf{\ac{MCC}} \\
         \hline
-        \multirow{6}{*}{node2vec} & Dimensions & 300 & \multirow{6}{*}{\textbf{0.977}} & \multirow{6}{*}{\textbf{0.981}} & \multirow{6}{*}{\textbf{0.877}} \\ 
-            & Walk length & 8 & & & \\
-            & Number of walks & 8 & & & \\
-            & Window size & 4 & & & \\
-            & Return parameter ($p$) & 2.3 & & & \\
-            & In/out parameter ($q$) & 1.9 & & & \\
+        \multirow{6}{*}{node2vec} & Dimensions & 300 & \multirow{6}{*}{\textbf{0.977}} & \multirow{6}{*}{\textbf{0.981}} & \multirow{6}{*}{\textbf{0.877}} \\
+        & Walk length & 8 & & & \\
+        & Number of walks & 8 & & & \\
+        & Window size & 4 & & & \\
+        & Return parameter ($p$) & 2.3 & & & \\
+        & In/out parameter ($q$) & 1.9 & & & \\
         \hline
         \multirow{4}{*}{DeepWalk} & Dimensions & 300 & \multirow{4}{*}{0.969} & \multirow{4}{*}{0.974} & \multirow{4}{*}{0.846} \\
-            & Walk length & 8 & & & \\
-            & Number of walks & 8 & & & \\
-            & Window size & 2 & & & \\
+        & Walk length & 8 & & & \\
+        & Number of walks & 8 & & & \\
+        & Window size & 2 & & & \\
         \hline
         HOPE & Dimensions & 300 & 0.937 & 0.962 & 0.842 \\
         \hline
-        \multirow{2}{*}{GraRep} & Dimensions & 300 & \multirow{2}{*}{0.977} & \multirow{2}{*}{0.981} & \multirow{2}{*}{0.866} \\ 
-            & $k$-step & 3 & & & \\ 
+        \multirow{2}{*}{GraRep} & Dimensions & 300 & \multirow{2}{*}{0.977} & \multirow{2}{*}{0.981} & \multirow{2}{*}{0.866} \\
+        & $k$-step & 3 & & & \\
         \hline
-        \multirow{3}{*}{\ac{LINE}} & Dimensions & 300 & \multirow{3}{*}{0.979} & \multirow{3}{*}{0.983} & \multirow{3}{*}{0.869} \\ 
-            & Proximity order & 3 & & & \\
-            & Epochs & 5 & & & \\
+        \multirow{3}{*}{\ac{LINE}} & Dimensions & 300 & \multirow{3}{*}{0.979} & \multirow{3}{*}{0.983} & \multirow{3}{*}{0.869} \\
+        & Proximity order & 3 & & & \\
+        & Epochs & 5 & & & \\
         \hline
-        \multirow{3}{*}{\ac{SDNE}} & Proximity balance ($\alpha$) & 0.128 & \multirow{3}{*}{0.927} & \multirow{3}{*}{0.949} & \multirow{3}{*}{0.648} \\ 
-            & Reconstruction weight ($\beta$) & 14 & & & \\
-            & Epochs & 25 & & & \\
+        \multirow{3}{*}{\ac{SDNE}} & Proximity balance ($\alpha$) & 0.128 & \multirow{3}{*}{0.927} & \multirow{3}{*}{0.949} & \multirow{3}{*}{0.648} \\
+        & Reconstruction weight ($\beta$) & 14 & & & \\
+        & Epochs & 25 & & & \\
         \hline
     \end{tabular}
-    \caption[Evaluation results for the best NRL model]{Evaluation results for the best model in each \ac{NRL} method. The model with the best evaluation result is node2vec with AUC-ROC of 0.977, AUC-PR of 0.981, and \ac{MCC} of 0.877} 
+    \caption[Evaluation results for the best NRL model]{Evaluation results for the best model in each \ac{NRL} method. The model with the best evaluation result is node2vec with AUC-ROC of 0.977, AUC-PR of 0.981, and \ac{MCC} of 0.877}
     \label{tab:evaluation_results}
 \end{table}
 
@@ -129,7 +129,7 @@ Table~\ref{tab:drug_phenotype} presents the top ten predicted phenotypes for the
 
 \begin{table}[!ht]
     \centering
-    \begin{tabular}{|l|l|l|r|r|} 
+    \begin{tabular}{|l|l|l|r|r|}
         \hline
         \textbf{Namespace} & \textbf{Identifier} & \textbf{Name} & \textbf{$p$-value} & \textbf{MLP} \\
         \hline
@@ -181,13 +181,13 @@ Positive controls of olnazapine-phenotype associations are presented in Table~\r
         \hline
         \textbf{Namespace} & \textbf{Identifier} & \textbf{Name} & \textbf{$p$-value} & \textbf{MLP} \\
         \hline
-        umls & C1320474 & Nuchal rigidity &  0.0 & 3.318 \\
+        umls & C1320474 & Nuchal rigidity & 0.0 & 3.318 \\
         \hline
-        umls & C0002453 &  Amenorrhoea &  0.0 & 3.619 \\
+        umls & C0002453 & Amenorrhoea & 0.0 & 3.619 \\
         \hline
-        umls & C0011168 &  Dysphagia &  0.0 & 3.408 \\
+        umls & C0011168 & Dysphagia & 0.0 & 3.408 \\
         \hline
-        umls &  C0033117 & Priapism &  0.0 &  3.515 \\
+        umls & C0033117 & Priapism & 0.0 & 3.515 \\
         \hline
     \end{tabular}
     \caption{Positive control for olanzapine phenotypic predictions}
@@ -204,29 +204,29 @@ The top ten predictions of chemicals associated with \ac{PD} are shown in Table 
 
 \begin{table}[h]
     \centering
-    \begin{tabular}{|l|l|l|r|r|} 
+    \begin{tabular}{|l|l|l|r|r|}
         \hline
         \textbf{Namespace} & \textbf{Identifier} & \textbf{Name} & \textbf{$p$-value} & \textbf{MLP} \\
         \hline
-        pubchem.compound &  146570 &  Escitalopram &  0.000 &  3.315 \\
+        pubchem.compound & 146570 & Escitalopram & 0.000 & 3.315 \\
         \hline
-        pubchem.compound & 5002 &  Quetiapine &  0.001 &  2.883 \\
+        pubchem.compound & 5002 & Quetiapine & 0.001 & 2.883 \\
         \hline
-        pubchem.compound &  5486971 &  Pregabalin &  0.001 &  3.111 \\
+        pubchem.compound & 5486971 & Pregabalin & 0.001 & 3.111 \\
         \hline
-        pubchem.compound & 68617 &  Sertraline &  0.002 &  2.763 \\
+        pubchem.compound & 68617 & Sertraline & 0.002 & 2.763 \\
         \hline
-        pubchem.compound &  5719 &  Zaleplon &  0.002 &  2.807 \\
+        pubchem.compound & 5719 & Zaleplon & 0.002 & 2.807 \\
         \hline
-        pubchem.compound & 60853 & Ziprasidone HCL &  0.002 &  2.613 \\
+        pubchem.compound & 60853 & Ziprasidone HCL & 0.002 & 2.613 \\
         \hline
-        pubchem.compound & 3345 & Fentanyl &  0.002 &  2.630 \\
+        pubchem.compound & 3345 & Fentanyl & 0.002 & 2.630 \\
         \hline
-        pubchem.compound & 5210 & Sibutramine &  0.002 &  2.613 \\
+        pubchem.compound & 5210 & Sibutramine & 0.002 & 2.613 \\
         \hline
-        pubchem.compound & 44602 &  Arbaclofen &  0.003 &  2.554 \\
+        pubchem.compound & 44602 & Arbaclofen & 0.003 & 2.554 \\
         \hline
-        pubchem.compound & 154101 & Dexmethylphenidate &  0.003 &  2.475 \\
+        pubchem.compound & 154101 & Dexmethylphenidate & 0.003 & 2.475 \\
         \hline
     \end{tabular}
     \caption{Top chemicals predictions for Parkinson's disease}
@@ -269,21 +269,21 @@ The positive controls for this association are shown in Table \ref{tab:ps_PD}.
 These four drugs (i.e., selegiline, aripiprazole, ropinirole, and clomipramine) are already used for treating \ac{PD} and are indicated as such in DrugBank, which is why their association with the disease exists in the network and they are expected to be predicted by the model.
 
 \begin{table}
-\centering
-\begin{tabular}{|l|l|l|r|r|}
-\hline
- \textbf{Namespace} & \textbf{Identifier} & \textbf{Name} & \textbf{$p$-value} & \textbf{MLP} \\
-\hline
-pubchem.compound & 26757 & Selegiline & 0.001 & 2.831 \\
-\hline
-pubchem.compound & 60795 &  Aripiprazole &  0.001 &  2.856 \\
-\hline
-pubchem.compound & 5095 & Ropinirole &  0.001 &  2.997 \\
-\hline
-pubchem.compound & 2801 & Clomipramine &  0.002 &  2.823 \\
-\hline
-\end{tabular}
- \caption{Positive control for PD chemicals predictions.}
+    \centering
+    \begin{tabular}{|l|l|l|r|r|}
+        \hline
+        \textbf{Namespace} & \textbf{Identifier} & \textbf{Name} & \textbf{$p$-value} & \textbf{MLP} \\
+        \hline
+        pubchem.compound & 26757 & Selegiline & 0.001 & 2.831 \\
+        \hline
+        pubchem.compound & 60795 & Aripiprazole & 0.001 & 2.856 \\
+        \hline
+        pubchem.compound & 5095 & Ropinirole & 0.001 & 2.997 \\
+        \hline
+        pubchem.compound & 2801 & Clomipramine & 0.002 & 2.823 \\
+        \hline
+    \end{tabular}
+    \caption{Positive control for PD chemicals predictions.}
     \label{tab:ps_PD}
 \end{table}
 
@@ -294,29 +294,29 @@ Table~\ref{tab:target_phenotype} presents predicted phenotypes that are associat
 
 \begin{table}[h]
     \centering
-    \begin{tabular}{ |l|l|l|r|r| } 
+    \begin{tabular}{ |l|l|l|r|r| }
         \hline
         \textbf{Namespace} & \textbf{Identifier} & \textbf{Name} & \textbf{$p$-value} & \textbf{MLP} \\
         \hline
-        umls & C0013384 & Dyskinesia &  0.009 &  2.070 \\
+        umls & C0013384 & Dyskinesia & 0.009 & 2.070 \\
         \hline
-        umls & C0015371 & Extrapyramidal disorder &  0.013 &  1.889 \\
+        umls & C0015371 & Extrapyramidal disorder & 0.013 & 1.889 \\
         \hline
-        umls & C0026837 & Muscle rigidity &  0.015 &  1.811 \\
+        umls & C0026837 & Muscle rigidity & 0.015 & 1.811 \\
         \hline
-        umls & C0234133 & Extrapyramidal symptoms &  0.022 &  1.649 \\
+        umls & C0234133 & Extrapyramidal symptoms & 0.022 & 1.649 \\
         \hline
-        umls &  C0026961 & Mydriasis &  0.023 &  1.639 \\
+        umls & C0026961 & Mydriasis & 0.023 & 1.639 \\
         \hline
-        umls & C0013144 & Drowsiness &  0.025 &  1.605 \\
+        umls & C0013144 & Drowsiness & 0.025 & 1.605 \\
         \hline
-        umls &  C0085631 & Agitation &  0.025 &  1.597 \\
+        umls & C0085631 & Agitation & 0.025 & 1.597 \\
         \hline
-        umls &  C0686347 & Tardive dyskinesia &  0.038 &  1.419 \\
+        umls & C0686347 & Tardive dyskinesia & 0.038 & 1.419 \\
         \hline
-        umls &  C0242422 & Parkinsonism &  0.044 &  1.356 \\
+        umls & C0242422 & Parkinsonism & 0.044 & 1.356 \\
         \hline
-        umls &  C0235063 & Respiratory depression &  0.053 &  1.273 \\
+        umls & C0235063 & Respiratory depression & 0.053 & 1.273 \\
         \hline
     \end{tabular}
     \caption{Top phenotypic predictions for M2R}
