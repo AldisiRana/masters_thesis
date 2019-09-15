@@ -2,23 +2,24 @@
 \label{ch:computerscience}
 
 A graph, or network, is a collection of nodes which are connected by edges.
-A graph is denoted as $G=(V,E)$, where $v \in V$ is a vertex, or node, and $e \in E$ is an edge~\cite{cai_comprehensive_2017}.
-A graph can have multiple types of nodes and/or edges, in such a case, the graph is called heterogeneous.
-A graph that has only one type of nodes and one type of edges is called homogeneous~\cite{cai_comprehensive_2017}.
+A graph is denoted as $G=(V,E)$ in which $v \in V$ is a vertex, or node, and $e \in E$ is an edge~\cite{cai_comprehensive_2017}.
+If a graph has multiple types of nodes and/or edges, it is called heterogeneous.
+Alternatively, a graph that has only one type of node and one type of edge is called homogeneous~\cite{cai_comprehensive_2017}.
+
 Analysis of networks is used in many different fields to understand the community structure of the network and the relationships between entities~\cite{cai_comprehensive_2017}.
 It also helps gain insight on the hidden information and patterns in the network~\cite{cai_comprehensive_2017}.
-Network analysis have been used in many applications such as relationship prediction, entity classification, clustering and visualization~\cite{goyal_graph_2018}.
+Network analysis have been used in many applications such as relationship prediction, entity classification, clustering, and visualization~\cite{goyal_graph_2018}.
 
-\ac{NRL} is a machine learning approach that aims to learn and embed nodes of a network into latent, low-dimensional vector space, without compromising node content, network topology, and other information~\cite{zhang_network_2017}.
-The topological and structural properties of a node are encoded into its embedding vector, and the distance between nodes in the vector space captures the relationships between them.
-Since each node is represented by a vector that contains its information of interest; computing mapping functions or distance matrices on the embedding can help avoid high complexity during network analysis.
-Thus, \ac{NRL} methods have two main goals, to be able to reconstruct the original network from the learned embedding and to be able to use the learned embedding space to effectively support network interface~\cite{sheikh_gat2vec:_2018}.
+\ac{NRL} is a machine learning approach that learns embeddings for nodes of a network in a latent, low-dimensional vector space, without compromising node content, network topology, and other information~\cite{zhang_network_2017}.
+The topological and structural properties of a node are encoded into its embedding, and the distance between nodes in the vector space captures the relationships between them.
+Since each node is represented by a vector that contains its information of interest, computing mapping functions or distance matrices on the embedding can help avoid high complexity during network analysis.
+Thus, \ac{NRL} methods have two main goals: to be able to reconstruct the original network from the learned embedding and to be able to use the learned embedding space to effectively support network interface~\cite{sheikh_gat2vec:_2018}.
 
 \section{Background on Network Biology}
 
 Relationships in systems biology are often represented as networks, which allows analysis and modeling of the data using computational methods.
-Many biological networks have been created and analyzed over the years like protein-protein interactions, gene regulation, metabolic, etc..
-The study of such networks help in the understanding of human disease, mechanisms of action and complex biological systems~\cite{dancik_properties_2013}.
+With the emergence of the field of systems biology, many biological networks have been created and analyzed such protein-protein interactions, gene regulatory networks, and metabolic networks.
+The study of such networks help in the understanding of human disease, mechanisms of action of drugs, and complex biological systems~\cite{dancik_properties_2013}.
 
 \subsection{Biological Network Topology}
 
@@ -29,10 +30,11 @@ The degree of a node is the number of relations it has, a node with high degree 
 Biological networks usually consist of a small number of nodes that are highly connected (hubs), and a large number of nodes that have fewer connections, which is known as “scale-free” format~\cite{zhu_getting_2007}.
 This network format follows a power-law distribution $k^{-a}$ where k is the degree of a fraction of nodes and $a>1$~\cite{broido_scale-free_2019}.
 
-The distance between two nodes is defined as the shortest path length between them.
-On the other hand, the diameter of a network is the maximum path length between a pair of nodes.
+The geodesic distance between two nodes is defined as the length of the shortest path between them.
+On the other hand, the diameter of a network is the maximum shortest path length between all pairs of nodes.
 The approximate distance between nodes in a network can be measured by calculating the average distance and diameter.
-A network with small diameter means that two nodes are connected by relatively short paths, this type of graph is generally known as “small world” network~\cite{zhu_getting_2007}.
+A network with small diameter means that on average two nodes are connected by relatively short paths.
+This type of graph is generally known as a “small world” network~\cite{zhu_getting_2007}.
 
 The clustering coefficient of a node is the percentage of existing relations among its neighborhood.
 It can be calculated by the number of edges between nodes in the neighborhood divided by the total number of edges that are possible between them, which gives a value between 0 and 1.
@@ -41,22 +43,22 @@ On the other hand, a network that was created randomly has a low clustering coef
 
 \section{Random Walk Representation Learning Methods}
 
-A random walk is a stochastic process in which a path is created by randomly choosing a neighbor of a node.
-Random walk is a good approach to use for detecting communities and capturing community information~\cite{perozzi_deepwalk:_2014}.
-For the purpose of \ac{NRL}, a stream of short random walks is used to extract the network information; this way several walkers can be used to explore different parts of the same graph at the same time~\cite{perozzi_deepwalk:_2014}.
+A random walk is a stochastic process in which a path is created by iteratively randomly choosing a neighbor of the last node in the walk.
+Random walks are useful for detecting communities and capturing community information~\cite{perozzi_deepwalk:_2014}.
+For the purpose of \ac{NRL}, a stream of short random walks is used to extract the network information, and several walkers can be used to explore different parts of the same graph at the same time~\cite{perozzi_deepwalk:_2014}.
 
 \subsection{Language Models}
 
-Language models are an important part of natural language processing, which is a branch of artificial intelligence that aims to enable computers to interact, analyze and process natural language.
+Language models are an important part of natural language processing, which is a branch of artificial intelligence that aims to enable computers to interact, analyze, and process natural language.
 The objective of a language model is to assign probabilities specific sequence of words appearing in a corpus.
-That is, for a sentence with finite sequence of words, where words are from vocabulary, the goal is to maximize the probability of a word over all the training corpus~\cite{perozzi_deepwalk:_2014}.
+For a sentence with finite sequence of words from a given vocabulary, the goal is to maximize the probability of a word over all the training corpus~\cite{perozzi_deepwalk:_2014}.
 To use a language model on short random walks created from a graph, one can generalize the model by processing the random walks as a special language with nodes as words~\cite{perozzi_deepwalk:_2014}.
 
 \subsection{SkipGram and GloVe}
 
-SkipGram is a language model that attempts to predict the context of a word by maximizes the probability of co-occurrence among the words that appear within a window in a sentence~\cite{perozzi_deepwalk:_2014}.
+SkipGram is a language model that attempts to predict the context of a word by maximizing the probability of co-occurrence among the words that appear within a window in a sentence~\cite{perozzi_deepwalk:_2014}.
 This can be done by training a neural network with pairs of words within a certain window from the training corpus, the probability of the co-occurrence is then calculated by the number of times each pair appeared in the training~\cite{mccormick_word2vec_nodate}.
-However, since the goal is to learn latent representations rather than the probability of node co-occurrences, some mapping function is introduced to the probability calculation~\cite{perozzi_deepwalk:_2014}.
+However, since the goal is to learn latent representations rather than the probability of node co-occurrences, a mapping function is introduced to the probability calculation~\cite{perozzi_deepwalk:_2014}.
 
 \ac{GloVe} is another language model that uses a count matrix factorization approach.
 It learns word representations by calculating their ratio of the co-occurrence probability instead of raw co-occurrence probability, which is said to encode meaningful global information~\cite{pennington_glove:_2014}.
@@ -70,7 +72,7 @@ The algorithm of the model consists of two main steps:
     \item Run SkipGram using the paths generated in the first step to learn features of nodes and create node embeddings.
 \end{enumerate}
 The model also uses hierarchical softmax to approximate the probability distribution, since using softmax as an activation function would be computationally expensive, with a computation time of $O(|V|)$.
-In hierarchical softmax, a binary tree, with the nodes of the graph as leaves, is utilized to deal with the computation problem by factorizing the conditional probability.
+In hierarchical softmax, a binary tree, with the nodes of the graph as leaves, is used to handle the computation problem by factorizing the conditional probability.
 The probability of a given node $v_{i}$ is computed by calculating the probability of each sub-path from the root node to the node $v_{i}$, which reduces the computation time to $O(log|V|)$~\cite{perozzi_deepwalk:_2014}.
 
 \begin{figure}[h!]
@@ -84,7 +86,7 @@ The probability of a given node $v_{i}$ is computed by calculating the probabili
 \subsection{Node2vec}\label{subsection:node2vec}
 
 Node2vec is a semi-supervised approach that learns scalable latent features in networks.
-This model is very similar to DeepWalk, with two new parameters $p$ and $q$.
+This model is very similar to DeepWalk with two additional parameters: $p$ and $q$.
 The return parameter, $p$, controls the probability of revisiting nodes in a walk.
 A high value of $p$ means that it is less likely to revisit a node for the next two steps.
 If $p$ is low, it is more likely to revisit the node immediately.
@@ -105,7 +107,7 @@ If $q$ < 1, then the walk is biased toward nodes that are further away from the 
 \subsection{Translational Distance Models}
 
 The idea of translational distance methods is to calculate the possibility of a fact by measuring the distance between two entities using distance-based scoring functions~\cite{wang_knowledge_2017}.
-Translational models have multiple applications in biomedical literature, including drug-drug interaction prediction from drug knowledge graph~\cite{abdelaziz_large-scale_2017, wang_predicting_2017}, and disease prediction and clustering from symptom-disease network~\cite{zhao_contextcare:_2017}.
+Translational models have multiple applications in biomedical literature, including drug-drug interaction prediction from drug knowledge graph~\cite{abdelaziz_large-scale_2017, wang_predicting_2017} and disease prediction and clustering from symptom-disease network~\cite{zhao_contextcare:_2017}.
 
 \subsubsection{TransE}
 
@@ -120,9 +122,9 @@ For $(h, r, t)$, the relation \textit{r} will have a translation vector $d_{r}$ 
 
 \subsubsection{TransR}
 
-While both TransE and TranH assume that the embeddings of entities and relations are in the same space; TransR suggests creating entities and relations in different spaces, and perform the translation depending on the relation space.
-For each relation \textit{r}, a projection matrix $M_{r}$, which projects entities from the entity space to relation space, is generated.
-Thus, for a triple $(h, r, t)$, $h$ and $t$ entity embeddings are projected into \textit{r}-relation space with operation $M_{r}$~\cite{lin_learning_2015}.
+While both TransE and TranH assume that the embeddings of entities and relations are in the same space, TransR suggests creating entities and relations in different spaces and performs the translation depending on the relation space.
+A a projection matrix $M_{r}$ is generated for each relation \textit{r}, which projects entities from the entity space to relation space.
+For a triple $(h, r, t)$, $h$ and $t$ entity embeddings are projected into \textit{r}-relation space with operation $M_{r}$~\cite{lin_learning_2015}.
 Though TransR has improved compared to the previous translational models, it has a few limitations that can affect its performance.
 For example, even though entities linked by relations can have various types and attributes, it maps all relations to the same mapping matrix $M_{r}$.
 Also, mapping matrices are determined by the relations alone, despite the fact that there is an interactive process between an entity and a relation~\cite{ji_knowledge_2015}.
@@ -166,7 +168,7 @@ These kind of models have been used in tasks like utilizing electronic health re
 \ac{LINE} is a model proposed to handle the issue of embedding large information networks into low dimensional vector space.
 \ac{LINE} optimizes an objective functions that can preserve both the local (i.e.~first-order proximity) and global (i.e.~second-order proximity) structures of multiple types of networks (e.g.~directed, undirected, and/or weighted)~\cite{tang_line:_2015}.
 
-First-order proximity, which is the local pairwise proximity between nodes in the network, for an undirected edge$(i,j)$ can be found by defining the joint probability between two nodes as shown in equation (\ref{eq:line_01}).
+First-order proximity, which is the local pairwise proximity between nodes in the network, for an undirected edge$(i,j)$ can be found by defining the joint probability between two nodes as shown in equation~\ref{eq:line_01}.
 Where $u_{i}$ is the low-dimensional representation (vector) of the node $v_{i}$.
 The objective function is optimized by minimizing the difference between two probability distributions.
 First-order proximity can only be applied to undirected edges in this model~\cite{tang_line:_2015}.
@@ -177,8 +179,7 @@ First-order proximity can only be applied to undirected edges in this model~\cit
 
 Second-order proximity assumes that nodes with many connections to other nodes are similar to each other.
 Also, each node is perceived as a "context" and nodes that have similar distributions over the "contexts" are presumed to be similar.
-For each edge$(i,j)$, the conditional distribution of "context" $v_{i}$ is defined in equation~\ref{eq:line_02}.
-Where $u_{i}$ is the representation of the node $v_{i}$ itself while $u_{i}^{'}$ is the representation of the node as "context" to other nodes and $|V|$ is the number of nodes or "contexts".
+For each edge$(i,j)$, the conditional distribution of "context" $v_{i}$ is defined in equation~\ref{eq:line_02} where $u_{i}$ is the representation of the node $v_{i}$ itself while $u_{i}^{'}$ is the representation of the node as "context" to other nodes and $|V|$ is the number of nodes or "contexts".
 Similar to first-order proximity, the objective function of the second-order proximity is calculated by minimizing the difference between two probability distributions~\cite{tang_line:_2015}.
 
 \begin{equation}
@@ -195,14 +196,14 @@ The model can preserve both the first-order and second-order proximity by concat
 Then, the first-order proximity is used by the supervised component to capture the local structure while the second-order proximity is used by the unsupervised component to preserve the global structure of the network~\cite{wang_structural_2016}.
 
 The neighborhood for each node is reconstructed to preserve the second-order proximity, and the pairwise similarities for a small portion of node pairs are obtained to preserve the first-order proximity, this creates an adjacency matrix which is the input to the autoencoder.
-The model also introduces a penalty on the reconstruction error for non-zero elements, this is because while the presence of links indicate similarity between nodes, the absence of links does not necessarily mean dissimilarity.
+The model also introduces a penalty on the reconstruction error for non-zero elements because while the presence of links indicate similarity between nodes, the absence of links does not necessarily mean dissimilarity.
 Parameter $\alpha$ balances the weight between first-order and second-order proximity, when $\alpha=0$, the model performance is dependent on second-order proximity, as $\alpha$ gets larger, the model focuses on first-order proximity.
 The $\beta$ parameter controls the reconstruction weight of the non-zero elements in training set.
 The larger $\beta$ is, the more susceptible the model is to reconstructing non-zero elements~\cite{wang_structural_2016}.
 
 \section{Application of Network Representation Learning}
 
-In the recent years, \ac{NRL} methods have been used in several tasks including node classification, node ranking, node clustering and edge prediction.
+\ac{NRL} methods have been used in several tasks including node classification, node ranking, node clustering and edge prediction.
 
 In node classification, the \ac{NRL} model learns latent features from labelled nodes, then assigns a class label for each node in the graph based on those features.
 Thus, similar nodes will have similar labels~\cite{cui_survey_2017}.

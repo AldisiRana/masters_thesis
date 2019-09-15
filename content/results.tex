@@ -2,6 +2,7 @@
 \label{results}
 
 \section{Data Preprocessing and Network Construction}
+
 The issue with combining different data sources is that sometimes they are inconsistent and/or incomplete, which is why data preprocessing is needed to create a sufficient network that can be used for prediction tasks.
 However, preprocessing of data can also mean the loss of incompatible yet important information.
 The main preprocessing task in this thesis was the merging of chemicals from the \ac{SIDER} and DrugBank graphs, although both graphs contained chemicals that were labeled with PubChem identifiers, some chemicals can have two or more different PubChem identifier, that can contain different stereochemistry or isotopes of the same compound.
@@ -9,9 +10,9 @@ This resulted in having different nodes of the same chemical from the two differ
 To resolve this issue, the nodes of the chemicals were merged using their canonical \ac{SMILES}, which focuses on the topology of the compound and disregards its stereochemistry.
 However, another issue could emerge from this approach, since isomers from the same compound do not always elicit the same response, which could cause a different kind of problem in the predictions.
 
-The network was built first using two databases, \ac{SIDER} and DrugBank, which contained three types of nodes, chemicals, phenotypes, and targets, and two types of relations, chemical - phenotype, and chemical - target, in total.
+The network was built first using two databases, \ac{SIDER} and DrugBank, which contained three types of nodes, chemicals, phenotypes, and targets, and two types of relations, chemical - phenotype, and chemical - target.
 However, this was not enough to build a graph that is able to predict new relations, since it would not have enough relations to learn from.
-This is why chemical similarity, chemical - chemical, relations were added to the complete graph.
+This is why chemical similarity, chemical - chemical, relations were added.
 The 50\% similarity complete graph was very well connected, because the similarity threshold was low, thus many of the chemicals had relations with one another.
 On the other hand, the clustered chemicals complete graph followed a power-law degree distribution, shown in Figure~\ref{fig:degree_distribution}, which is a property of scale-free network format.
 The average clustering coefficient of 0.165 indicates that while the nodes are not in highly clustered, the network is not random.
@@ -24,6 +25,7 @@ The average clustering coefficient of 0.165 indicates that while the nodes are n
 \end{figure}
 
 \section{Model Evaluation and Selection}
+
 Six different \ac{NRL} models (node2vec, DeepWalk, \ac{GraRep}, \ac{HOPE}, \ac{LINE}, and \ac{SDNE}) were evaluated and the approach that works best with the data set created for this thesis was selected.
 Translational distance-based models, TransH and TransR, were also trained and evaluated, however, they performed poorly on this kind of biological network.
 This might be because the network created for this thesis contains a large number of relations compared to the entities.
@@ -45,7 +47,7 @@ Thus, the complete graph with clusters relations was chosen for training and pre
 
 All the models went through 100 trials, hyperparameters were randomly selected at each run.
 For each method, a set of parameters that play a role in the embeddings generation were selected to be optimized.
-All the models, with the exception of SDNE, have embeddings dimensions, which is an important paramter to optimize since it will contain all the low-dimensional representations of the graph.
+All the models, with the exception of SDNE, have embeddings dimensions, which is an important parameter to optimize since it will contain all the low-dimensional representations of the graph.
 In GraRep, $k$-step parameter indicates length of the longest path that the embeddings will contain.
 The selection of order in \ac{LINE} determines if the model will preserve the local structure (order=1), global structure (order=2), or both (order=3).
 The epochs in \ac{LINE} and \ac{SDNE} control the number of times the model will go through the training set.
@@ -58,7 +60,8 @@ The best trial for each model was selected based on the highest \ac{MCC} score.
 This metric was chosen for the optimization because it is an unbiased and balanced measure that works on both balanced and unbalanced data sets, thus it is a more stable measure of performance.
 
 Table~\ref{tab:evaluation_results} presents the parameters and evaluation metrics for the best trial of each method.
-All models, with the excpetion of \ac{SDNE}, performed faily well, with AUC-ROC and AUC-PR of above 0.9, and MCC of above 0.8, however the model that performed the best was node2vec with AUC-ROC of 0.977, AUC-PR of 0.981, and \ac{MCC} of 0.877, which is why it was chosen to be the model used for prediction.
+All models, with the exception of \ac{SDNE}, performed fairly well, with AUC-ROC and AUC-PR of above 0.9, and MCC of above 0.8.
+However, the model that performed the best was node2vec with AUC-ROC of 0.977, AUC-PR of 0.981, and \ac{MCC} of 0.877, which is why it was chosen to be the model used for prediction.
 The node2vec model worked best for this data set because of the hyperparameters selected.
 A window size of 4 and walk length of 8 were big enough to include nearby nodes and paths to learn and predict nodes that are not directly related (target - phenotype associations), but not too big as to include unnecessary relations.
 The number of walks made sure to learn the paths between nodes without overfitting the network so new predictions can be made.
@@ -103,7 +106,7 @@ Furthermore, high $p$ and $q$ parameters ensured that the model would avoid revi
 
 To check the randomness and robustness of the models, the training and evaluation of each model was repeated ten times.
 Figure~\ref{fig:boxplot} shows the \ac{MCC} results of each of the models.
-These results, with the exception of SDNE, indicate that the models are not created randomly and are quiet robust.
+These results, with the exception of SDNE, indicate that the models performances are not random and are quite robust.
 
 \begin{figure}[h!]
     \centering
@@ -114,7 +117,7 @@ These results, with the exception of SDNE, indicate that the models are not crea
 
 \section{Interpretation of Model Predictions}
 
-Node2vec final embeddings and logistic regression model were trained using the complete graph and exported to be used for predictions.
+The node2vec embeddings and logistic regression model were trained using the complete graph and exported to be used for predictions.
 The predictions were created by enquiring the name or identifier of a certain entity.
 Furthermore, the type of entities to be predicted could also be specified.
 Three types of relations could be predicted using the model: drug-phenotype, drug-target, and target-phenotype.
@@ -159,11 +162,11 @@ Table~\ref{tab:drug_phenotype} presents the top ten predicted phenotypes for the
 \end{table}
 
 Olanzapine is an atypical antipsychotic drug that primarily acts on dopamine and serotonin receptors, and is used to treat schizophrenia and bipolar disorders~\cite{thomas_olanzapine_2019}.
-Several case reports have presented cardiovascular problems that are associated with olanzapine treatement, one report mentioned that a patient treated with olanzapine experienced bundle branch block, which is a blockage or delay in electrical impulses of the heart~\cite{ninan_case_2017}.
+Several case reports have presented cardiovascular problems that are associated with olanzapine treatment, one report mentioned that a patient treated with olanzapine experienced bundle branch block, which is a blockage or delay in electrical impulses of the heart~\cite{ninan_case_2017}.
 Another case report presented a patient that suffered from cardiomyopathy after being treated with olanzapine~\cite{puttegowda_olanzapine_2016}.
-Both phenotypes have been predicted with the model, and Figure~\ref{fig:olanzapine_phenotypes} shows a subgraph representing some of the paths that are present in the network between olanzapine and three different predicted phenotypes, bundle branch block, cardiomyopathy and balance disorder, which indicate that the predictions could have been made from side-effect similarities.
+Both phenotypes have been predicted with the model, and Figure~\ref{fig:olanzapine_phenotypes} shows a subgraph representing some of the paths that are present in the network between olanzapine and three different predicted phenotypes (bundle branch block, cardiomyopathy, and balance disorder), which indicate that the predictions could have been made from side-effect similarities.
 
-Studies have been done to investigate the effect of olanzapine, among other atypical antipsychotics, on cognitive function, including attention, memory and verbal learning and they have confirmed that olanzapine improves those cognitive functions in schizophrenia patients~\cite{mcgurk_cognitive_2004, smith_effects_2001, cuesta_effects_2001, purdon_neuropsychological_2000, bilder_neurocognitive_2002}.
+Studies have been done to investigate the effect of olanzapine, among other atypical antipsychotics, on cognitive function, including attention, memory, and verbal learning and they have confirmed that olanzapine improves those cognitive functions in schizophrenia patients~\cite{mcgurk_cognitive_2004, smith_effects_2001, cuesta_effects_2001, purdon_neuropsychological_2000, bilder_neurocognitive_2002}.
 The effect of antipsychotic drugs on the liver has also been studied and it was found that olanzapine can induce hepatic damage~\cite{lv_antipsychotic_2018}.
 Both association with memory and liver injury were also predicted using the model.
 Positive controls of olnazapine-phenotype associations are presented in Table~\ref{tab:ps_olanzapine}, those four phenotypes (nuchal rigidity, amenorrhoea, dysphagia, and priapism) are all present in \ac{SIDER} as side effects of olanzapine.
@@ -199,7 +202,7 @@ Positive controls of olnazapine-phenotype associations are presented in Table~\r
 
 The model can also be used to predict chemicals that can be associated with phenotypes.
 Here, it used to predict chemicals that might best affect \ac{PD}, a progressive neurodegenerative disorder that affects motor and non-motor functions in variable degrees~\cite{jankovic_parkinsons_2008}.
-Common motor features of \ac{PD} are tremord, rigidity, slowness (bradykinesia), and impaired balance.
+Common motor features of \ac{PD} are tremors, rigidity, slowness (bradykinesia), and impaired balance.
 Other \ac{PD} symptoms include cognitive impairment and abnormal neurological behaviors~\cite{jankovic_parkinsons_2008}.
 The top ten predictions of chemicals associated with \ac{PD} are shown in Table~\ref{tab:phenotype_drug}.
 
@@ -256,7 +259,7 @@ Many researches have investigated quetiapine for treating psychotic symptoms in 
 Even though those studies have not been able to prove the efficacy of quetiapine on \ac{PD}, they suggest that the high dropout rate might have influenced the results and follow-up studies with larger sample size are required.
 Figure~\ref{fig:parkinson_quetiapine} shows some of the paths in the network that were used to predict the association of quetiapine with \ac{PD}.
 It is evident from the figure that quetiapine share targets and chemical similarities with two chemicals, bromocriptine and memantine, that are directly associated with \ac{PD}.
-It is worth mentioning that the prediction of associtation between quetiapine and \ac{PD} was quiet consistent, appearing in the top 30 predictions with different predictive models (not shown).
+It is worth mentioning that the prediction of association between quetiapine and \ac{PD} was quite consistent, appearing in the top 30 predictions with different predictive models (not shown).
 
 \begin{figure}[h!]
     \centering
@@ -265,7 +268,7 @@ It is worth mentioning that the prediction of associtation between quetiapine an
     \caption[Quetiapine's path subgraph in Parkinson's disease]{\label{fig:parkinson_quetiapine} A subgraph showing the shortest relation paths between quetiapine and \ac{PD}.}
 \end{figure}
 
-A couple of the other predicted chemicals, pregabalin and ziprasidone, have been shown to cause or worsen symptoms of \ac{PD}~\cite{perez_lloret_pregabalin-induced_2009, younce_systematic_2019}, while the rest of the predicted chemicals do not have any studies that prove their association with \ac{PD}.
+Two high-scoring chemicals chemicals, pregabalin and ziprasidone, have been shown to cause or worsen symptoms of \ac{PD}~\cite{perez_lloret_pregabalin-induced_2009, younce_systematic_2019}, while the rest of the predicted chemicals do not have any studies that prove their association with \ac{PD}.
 The positive controls for this association are shown in Table~\ref{tab:ps_PD}.
 These four drugs (i.e., selegiline, aripiprazole, ropinirole, and clomipramine) are already used for treating \ac{PD} and are indicated as such in DrugBank, which is why their association with the disease exists in the network and they are expected to be predicted by the model.
 
