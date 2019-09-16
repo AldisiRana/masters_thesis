@@ -1,4 +1,6 @@
-# Generation and Applications of Side Effect Embeddings in Biomedical Knowledge Discovery
+# Generation and Applications of Side Effect Embeddings in Biomedical Knowledge Discovery [![DOI](https://zenodo.org/badge/208453046.svg)](https://zenodo.org/badge/latestdoi/208453046)
+
+This repository contains the master thesis of Rana Subhi Aldisi. Click [here](https://github.com/AldisiRana/masters_thesis/raw/master/main.pdf) for the latest version.
 
 ## Build
 
@@ -8,6 +10,11 @@ To build as a PDF, clone the repository and use the following command:
 $ latexmk -pdf -pvc main
 ```
 ## Abstract
-Side effects are unintended reactions caused by introducing drugs into the body. Discovering a drug’s side effects is an important step in drug development, which can be expensive and lead to incomplete side effects profile. Many approaches have been developed to predict side effects in an effort to understand the mechanism(s) of action of a drug and – as a consequence - make the drug development process more efficient. Side effect information has also been used to identify drug targets and find new therapeutic benefits for existing drugs.
 
-This thesis introduces a workflow that applies network representation learning, which is a machine learning approach for learning representations in low dimensions, on biomedical networks that contain drug-, target- and side effect-information in an attempt to understand the causes of side effects. Different representation learning methods were evaluated to select the best model, which was then used to train a logistic regression classifier to predict relations between different entities. The predictive model was able to predict chemical-phenotype, chemical-target and target-phenotype relations, which were analyzed and validated using literature.
+Side effects are unintended consequences of introducing drugs into the body.
+Identifying a drug candidate's side effects is an important step in drug development that can both be expensive and still result in incomplete side effects profiles.
+Further, side effect profiles have been used to identify drugs' targets and hypothesize new therapeutic benefits for existing drugs.
+
+This thesis introduces a workflow that applies network representation learning to biomedical networks that contain drugs, their targets, their indications, and their side effects in an attempt to understand the mechanisms of action underlying side effects.
+Different network representation learning models were evaluated and optimized before selecting the best for training a predictive model for relations between different entities in the original network.
+It was then used to predict chemical-phenotype, chemical-target, and target-phenotype relations, which were analyzed and validated using literature.
