@@ -12,7 +12,6 @@
 \usepackage{paralist}%used to add inline lists inside paragraphs (inparaenum command)
 \usepackage{csquotes}
 \usepackage{graphicx}                                    %used to add figures
-\usepackage[]{hyperref}    % used for autoref, linking ref to the object and so links are not a different color
 %\usepackage[a4paper,includeall,bindingoffset=20mm,margin=2cm,marginparsep=0cm,marginparwidth=0cm]{geometry}				%used to specify margins and such
 \usepackage[left=3cm, right=3cm]{geometry}
 \usepackage{setspace}                                    %used for the stretch comman in caption
@@ -37,7 +36,8 @@ backend=biber
 ]{biblatex}
 \usepackage{fancyhdr} % Necessary to modify footer and page numbering
 \usepackage{url}
-
+\usepackage{footnotebackref}
+\usepackage[]{hyperref}    % used for autoref, linking ref to the object and so links are not a different color
 % Modifies format of toc lines (no bold font)
 \renewcommand\cftchapfont{\normalsize}
 \renewcommand\cftchappagefont{\normalsize}
