@@ -7,12 +7,12 @@ It describes how the network was built, the different \ac{NRL} models ran on the
 \section{Network Construction}
 
 For the purpose of this thesis, a network of drugs-side effects-targets was constructed using two databases: \ac{SIDER} and DrugBank.
-The Bio2BEL framework, which integrates biological data using \ac{BEL}, was used to easily navigate and extracted information from the databases~\cite{hoyt_integration_2019}.
+The Bio2BEL framework, which integrates biological data using \ac{BEL}, was used to easily navigate and extract information from the databases~\cite{hoyt_integration_2019}.
 RDKit\footnote{\url{http://www.rdkit.org}} was also used to calculate chemical similarities and create relation edges between drugs.
 
 \subsection{SIDER}
 The bio2bel\textunderscore sider Python package~\cite{charles_tapley_hoyt_bio2bel/sider_2018} was used to download information from \ac{SIDER} database and convert the drugs, side effects, indications, and their interrelations into a \ac{BEL} graph.
-The resulting \ac{SIDER} graph contained 1,507 chemicals, identified with PubChem identifiers, and 6,990 side effect/indication, normalized using \ac{UMLS} terms.
+The resulting \ac{SIDER} graph contained 1,507 chemicals, identified with PubChem identifiers, and 6,990 side effects/indications, normalized using \ac{UMLS} terms.
 The total number of edges was 180,203.
 
 \subsection{DrugBank}
@@ -40,7 +40,7 @@ This graph had a total of 5,529 nodes and 110,228 edges.
 \subsection{A Complete Graph}
 
 To construct the complete graph, with drugs, targets, and side effects, \ac{SIDER}, DrugBank, and chemical similarity graphs were combined together.
-Each similarity graph was combined with the complete graph seperately, creating two different complete graphs.
+Each similarity graph was combined with the complete graph separately, creating two different complete graphs.
 A mapping file was created from the DrugBank database containing the PubChem identifier, DrugBank identifier, and drug name.
 The mapping was also improved by adding the canonical \ac{SMILES} which were taken from PubChem API\@.
 The drugs from both graphs were merged using the SMILES to remove duplicated chemicals.

@@ -113,8 +113,8 @@ Translational models have multiple applications in biomedical literature, includ
 
 TransE is an energy-based model that represents relationships as translations in the embedding space.
 Assuming there is a directed graph with entities and edges in the form of (head, relation, tail), or $(h, r, t)$, which indicated that there is a relationship between the head and tail entities.
-Then the embedding of the two entities \textit{h} and \textit{t} should be close to one another plus a translation vector \textit{r}, i.e $h + r \approx t$ when $(h, r, t)$ holds.
-This approach learns only one embedding for each entity and each relationship, i.e 1-to-1 relationships~\cite{bordes_translating_2013}.
+Then the embedding of the two entities \textit{h} and \textit{t} should be close to one another plus a translation vector \textit{r}, i.e., $h + r \approx t$ when $(h, r, t)$ holds.
+This approach learns only one embedding for each entity and each relationship, i.e., 1-to-1 relationships~\cite{bordes_translating_2013}.
 
 \subsubsection{TransH}
 TransH, or translation on hyperplane, tries to solve the problem in dealing with 1-to-N/N-to-N/N-to-1 relations in TransE by interpreting the translation vector on a hyperplane so that an entity will have distributed representations when involved in different relations.
@@ -166,7 +166,7 @@ These kind of models have been used in tasks like utilizing electronic health re
 \subsubsection{LINE}
 
 \ac{LINE} is a model proposed to handle the issue of embedding large information networks into low dimensional vector space.
-\ac{LINE} optimizes an objective functions that can preserve both the local (i.e.~first-order proximity) and global (i.e.~second-order proximity) structures of multiple types of networks (e.g.~directed, undirected, and/or weighted)~\cite{tang_line:_2015}.
+\ac{LINE} optimizes an objective functions that can preserve both the local (i.e.,~first-order proximity) and global (i.e.,~second-order proximity) structures of multiple types of networks (e.g.~directed, undirected, and/or weighted)~\cite{tang_line:_2015}.
 
 First-order proximity, which is the local pairwise proximity between nodes in the network, for an undirected edge$(i,j)$ can be found by defining the joint probability between two nodes as shown in equation~\ref{eq:line_01}.
 Where $u_{i}$ is the low-dimensional representation (vector) of the node $v_{i}$.
