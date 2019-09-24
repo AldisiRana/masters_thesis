@@ -65,6 +65,7 @@ It learns word representations by calculating their ratio of the co-occurrence p
 
 \subsection{DeepWalk}
 
+
 DeepWalk is an unsupervised scalable representation learning model that learns latent representations by obtaining information from short random walks.
 The algorithm of the model consists of two main steps:
 \begin{enumerate}[1.]
@@ -74,8 +75,7 @@ The algorithm of the model consists of two main steps:
 The model also uses hierarchical softmax to approximate the probability distribution, since using softmax as an activation function would be computationally expensive, with a computation time of $O(|V|)$.
 In hierarchical softmax, a binary tree, with the nodes of the graph as leaves, is used to handle the computation problem by factorizing the conditional probability.
 The probability of a given node $v_{i}$ is computed by calculating the probability of each sub-path from the root node to the node $v_{i}$, which reduces the computation time to $O(log|V|)$~\cite{perozzi_deepwalk:_2014}.
-
-\begin{figure}[h!]
+\begin{figure}[!ht]
     \center{\includegraphics[scale=0.4]
     {figures/hs.jpg}
     \captionsetup{justification=centering}
@@ -83,7 +83,16 @@ The probability of a given node $v_{i}$ is computed by calculating the probabili
     }
 \end{figure}
 
+
 \subsection{Node2vec}\label{subsection:node2vec}
+
+\begin{figure}[ht!]
+    \center{\includegraphics[scale=0.25]
+    {figures/node2vec.png}
+    \captionsetup{justification=centering}
+    \caption[An illustration of node2vec transition calculations]{\label{fig:node2vec}  Random walk evaluation for next step transition for $v$. Edge labels indicate the search bias. Image adapted from~\cite{grover_node2vec:_2016}}
+    }
+\end{figure}
 
 Node2vec is a semi-supervised approach that learns scalable latent features in networks.
 This model is very similar to DeepWalk with two additional parameters: $p$ and $q$.
@@ -95,13 +104,6 @@ The $q$ parameter deals with “inward” and “outward” nodes.
 If $q$ > 1, the random walk is more likely to visit a node that is close to the previous node, which means that it focuses more on the local structures.
 If $q$ < 1, then the walk is biased toward nodes that are further away from the previous node, which encourages exploration of the graph~\cite{grover_node2vec:_2016}.
 
-\begin{figure}[h!]
-    \center{\includegraphics[scale=0.25]
-    {figures/node2vec.png}
-    \captionsetup{justification=centering}
-    \caption[An illustration of node2vec transition calculations]{\label{fig:node2vec}  Random walk evaluation for next step transition for $v$. Edge labels indicate the search bias. Image adapted from~\cite{grover_node2vec:_2016}}
-    }
-\end{figure}
 \section{Other Representation Learning Methods}
 
 \subsection{Translational Distance Models}

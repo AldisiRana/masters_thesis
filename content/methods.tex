@@ -97,7 +97,7 @@ All models have gone through a hyperparameter optimization process.
 With the help of the optuna Python package~\cite{akiba_optuna:_2019}, ranges for the hyperparameters were selected and a number of trials were run while randomly changing parameters to find the hyperparameters that maximize the Matthews correlation coefficient, explained in~\ref{evaluation_section}.
 The ranges and values for the hyperparameters where chosen based on their role in the model and were taken from~\cite{yue_graph_2019}.
 
-\begin{table}[ht!]
+\begin{table}[!ht]
     \centering
     \begin{tabular}{ |l|l|r| }
         \hline
@@ -170,6 +170,7 @@ Table~\ref{tab:evaluation} presents the calculations used in the evaluation metr
         MCC & $\frac{(TP*TN)-(FP*FN)}{\sqrt{(TP + FP)(FN + TN)(FP + TN)(TN + FN)}}$ \\
         \hline
     \end{tabular}
+    \captionsetup{justification=centering}
     \caption{Evaluation metrics definitions.}
     \label{tab:evaluation}
 \end{table}
