@@ -24,6 +24,8 @@
 % https://texblog.org/2012/12/21/multi-column-and-multi-row-cells-in-latex-tables/
 \usepackage{multirow}
 % used to format the captions
+\usepackage{afterpage}
+
 \usepackage[font={small, stretch=1.15},labelfont=bf, singlelinecheck=false]{caption}
 % used for bibliography information
 \usepackage[
@@ -72,6 +74,13 @@ backend=biber
 
 \captionsetup{justification=justified, format=plain, textformat=simple, font=footnotesize}                  %making the captions center
 
+\newcommand\blankpage{
+    \null
+    \thispagestyle{empty}
+    \addtocounter{page}{-1}
+    \newpage
+    }
+    
 \counterwithout{figure}{chapter}                        %making Figure number not reset at chapter start
 \counterwithout{table}{chapter}                        %making Table number not reset at chapter start
 \setcounter{tocdepth}{0}                                % Allow only \chapter in ToC
