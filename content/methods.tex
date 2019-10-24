@@ -137,12 +137,8 @@ The ranges and values for the hyperparameters where chosen based on their role i
 
 A logistic regression model was used for binary classification to predict edges between a given pair of nodes.
 The logistic regression is one of the most popular statistical models used for binary classification because it is simple, easy to interpret, and proven to perform well in many classification and prediction tasks.
-The results of the classifier are interpreted using two measures, $p$-value and minus log probability.
-The $p$-value is the probability that the null hypothesis is true.
-In this case, it is that a given edge does not exist between two nodes in the graph.
-The \ac{MLP} is also reported to enable easier interpretation.
-Generally, a $p$-value of less than 0.05, corresponding to an \ac{MLP} of greater than 1.3, is considered to be significant.
-It is worth mentioning that in this thesis, the $p$-value is mainly for ranking purposes, and multiple hypothesis testing correction was not employed.
+The results of the classifier were ranked using log odds ratio (LOR). The lower LOR is, the higher is the probability of the prediction to be true.
+
 
 \section{Evaluation Metrics}\label{evaluation_section}
 

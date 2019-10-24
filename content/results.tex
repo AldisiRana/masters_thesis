@@ -122,7 +122,7 @@ The node2vec embeddings and logistic regression model were trained using the com
 The predictions were created by querying the name or identifier of a certain entity.
 Furthermore, the type of entities to be predicted could also be specified.
 Three types of relations could be predicted using the model: drug-phenotype, drug-target, and target-phenotype.
-For each relation predicted, the $p$-value and \ac{MLP} value were calculated and used for ranking.
+For each relation predicted, the LOR was calculated and used for ranking.
 Since methods for drug-target associations, or drug target identification, are well developed, those association results were omitted from the interpretations.
 To validate the new predictions of the model, positive controls were also presented for drug-phenotype associations.
 
@@ -135,29 +135,29 @@ Yet it is also known to cause many side effects, some of which are discussed bel
 
 \begin{table}[!ht]
     \centering
-    \begin{tabular}{|l|l|l|r|r|}
+    \begin{tabular}{|l|l|l|r|}
         \hline
-        \textbf{Namespace} & \textbf{Identifier} & \textbf{Name} & \textbf{$p$-value} & \textbf{MLP} \\
+        \textbf{Namespace} & \textbf{Identifier} & \textbf{Name} & \textbf{LOR} \\
         \hline
-        umls & C0006384 & Bundle branch block & 0.000 & 3.475 \\
+        umls & C0006384 & Bundle branch block & 0.000 \\
         \hline
-        umls & C0575090 & Balance disorder & 0.000 & 3.539 \\
+        umls & C0575090 & Balance disorder & 0.000 \\
         \hline
-        umls & C0878544 & Cardiomyopathy & 0.001 & 2.918 \\
+        umls & C0878544 & Cardiomyopathy & 0.001 \\
         \hline
-        umls & C0233794 & Memory impairment & 0.001 & 2.870 \\
+        umls & C0233794 & Memory impairment & 0.001\\
         \hline
-        umls & C0004239 & Atrial flutter & 0.001 & 3.297 \\
+        umls & C0004239 & Atrial flutter & 0.001 \\
         \hline
-        umls & C0160390 & Liver injury & 0.001 & 3.175 \\
+        umls & C0160390 & Liver injury & 0.001 \\
         \hline
-        umls & C0020676 & Hypothyroidism & 0.001 & 2.911 \\
+        umls & C0020676 & Hypothyroidism & 0.001\\
         \hline
-        umls & C0002884 & Hypochromic anaemia & 0.001 & 3.059 \\
+        umls & C0002884 & Hypochromic anaemia & 0.001 \\
         \hline
-        umls & C0034069 & Pulmonary fibrosis & 0.001 & 2.901 \\
+        umls & C0034069 & Pulmonary fibrosis & 0.001\\
         \hline
-        umls & C0233477 & Dysphoria & 0.001 & 3.066 \\
+        umls & C0233477 & Dysphoria & 0.001 \\
         \hline
     \end{tabular}
     \captionsetup{justification=centering}
@@ -185,17 +185,17 @@ Positive controls of olnazapine-phenotype associations are presented in Table~\r
 
 \begin{table}[!ht]
     \centering
-    \begin{tabular}{|l|l|l|r|r|}
+    \begin{tabular}{|l|l|l|r|}
         \hline
-        \textbf{Namespace} & \textbf{Identifier} & \textbf{Name} & \textbf{$p$-value} & \textbf{MLP} \\
+        \textbf{Namespace} & \textbf{Identifier} & \textbf{Name} & \textbf{LOR} \\
         \hline
-        umls & C1320474 & Nuchal rigidity & 0.0 & 3.318 \\
+        umls & C1320474 & Nuchal rigidity & 0.0 \\
         \hline
-        umls & C0002453 & Amenorrhoea & 0.0 & 3.619 \\
+        umls & C0002453 & Amenorrhoea & 0.0  \\
         \hline
-        umls & C0011168 & Dysphagia & 0.0 & 3.408 \\
+        umls & C0011168 & Dysphagia & 0.0  \\
         \hline
-        umls & C0033117 & Priapism & 0.0 & 3.515 \\
+        umls & C0033117 & Priapism & 0.0 \\
         \hline
     \end{tabular}
     \captionsetup{justification=centering}
@@ -215,29 +215,29 @@ The top ten predictions of chemicals associated with \ac{PD} are shown in Table~
 
 \begin{table}[!hb]
     \centering
-    \begin{tabular}{|l|l|l|r|r|}
+    \begin{tabular}{|l|l|l|r|}
         \hline
-        \textbf{Namespace} & \textbf{Identifier} & \textbf{Name} & \textbf{$p$-value} & \textbf{MLP} \\
+        \textbf{Namespace} & \textbf{Identifier} & \textbf{Name} & \textbf{LOR} \\
         \hline
-        pubchem.compound & 146570 & Escitalopram & 0.000 & 3.315 \\
+        pubchem.compound & 146570 & Escitalopram & 0.000 \\
         \hline
-        pubchem.compound & 5002 & Quetiapine & 0.001 & 2.883 \\
+        pubchem.compound & 5002 & Quetiapine & 0.001 \\
         \hline
-        pubchem.compound & 5486971 & Pregabalin & 0.001 & 3.111 \\
+        pubchem.compound & 5486971 & Pregabalin & 0.001 \\
         \hline
-        pubchem.compound & 68617 & Sertraline & 0.002 & 2.763 \\
+        pubchem.compound & 68617 & Sertraline & 0.002 \\
         \hline
-        pubchem.compound & 5719 & Zaleplon & 0.002 & 2.807 \\
+        pubchem.compound & 5719 & Zaleplon & 0.002  \\
         \hline
-        pubchem.compound & 60853 & Ziprasidone HCL & 0.002 & 2.613 \\
+        pubchem.compound & 60853 & Ziprasidone HCL & 0.002 \\
         \hline
-        pubchem.compound & 3345 & Fentanyl & 0.002 & 2.630 \\
+        pubchem.compound & 3345 & Fentanyl & 0.002  \\
         \hline
-        pubchem.compound & 5210 & Sibutramine & 0.002 & 2.613 \\
+        pubchem.compound & 5210 & Sibutramine & 0.002 \\
         \hline
-        pubchem.compound & 44602 & Arbaclofen & 0.003 & 2.554 \\
+        pubchem.compound & 44602 & Arbaclofen & 0.003 \\
         \hline
-        pubchem.compound & 154101 & Dexmethylphenidate & 0.003 & 2.475 \\
+        pubchem.compound & 154101 & Dexmethylphenidate & 0.003 \\
         \hline
     \end{tabular}
     \captionsetup{justification=centering}
@@ -285,17 +285,17 @@ These four drugs (i.e., selegiline, aripiprazole, ropinirole, and clomipramine) 
 
 \begin{table}[!ht]
     \centering
-    \begin{tabular}{|l|l|l|r|r|}
+    \begin{tabular}{|l|l|l|r|}
         \hline
-        \textbf{Namespace} & \textbf{Identifier} & \textbf{Name} & \textbf{$p$-value} & \textbf{MLP} \\
+        \textbf{Namespace} & \textbf{Identifier} & \textbf{Name} & \textbf{LOR} \\
         \hline
-        pubchem.compound & 26757 & Selegiline & 0.001 & 2.831 \\
+        pubchem.compound & 26757 & Selegiline & 0.001  \\
         \hline
-        pubchem.compound & 60795 & Aripiprazole & 0.001 & 2.856 \\
+        pubchem.compound & 60795 & Aripiprazole & 0.001 \\
         \hline
-        pubchem.compound & 5095 & Ropinirole & 0.001 & 2.997 \\
+        pubchem.compound & 5095 & Ropinirole & 0.001 \\
         \hline
-        pubchem.compound & 2801 & Clomipramine & 0.002 & 2.823 \\
+        pubchem.compound & 2801 & Clomipramine & 0.002 \\
         \hline
     \end{tabular}
     \captionsetup{justification=centering}
@@ -311,29 +311,29 @@ Table~\ref{tab:target_phenotype} presents predicted phenotypes that are associat
 
 \begin{table}[!ht]
     \centering
-    \begin{tabular}{ |l|l|l|r|r| }
+    \begin{tabular}{ |l|l|l|r| }
         \hline
-        \textbf{Namespace} & \textbf{Identifier} & \textbf{Name} & \textbf{$p$-value} & \textbf{MLP} \\
+        \textbf{Namespace} & \textbf{Identifier} & \textbf{Name} & \textbf{LOR}  \\
         \hline
-        umls & C0013384 & Dyskinesia & 0.009 & 2.070 \\
+        umls & C0013384 & Dyskinesia & 0.009  \\
         \hline
-        umls & C0015371 & Extrapyramidal disorder & 0.013 & 1.889 \\
+        umls & C0015371 & Extrapyramidal disorder & 0.013  \\
         \hline
-        umls & C0026837 & Muscle rigidity & 0.015 & 1.811 \\
+        umls & C0026837 & Muscle rigidity & 0.015  \\
         \hline
-        umls & C0234133 & Extrapyramidal symptoms & 0.022 & 1.649 \\
+        umls & C0234133 & Extrapyramidal symptoms & 0.022  \\
         \hline
-        umls & C0026961 & Mydriasis & 0.023 & 1.639 \\
+        umls & C0026961 & Mydriasis & 0.023  \\
         \hline
-        umls & C0013144 & Drowsiness & 0.025 & 1.605 \\
+        umls & C0013144 & Drowsiness & 0.025  \\
         \hline
-        umls & C0085631 & Agitation & 0.025 & 1.597 \\
+        umls & C0085631 & Agitation & 0.025  \\
         \hline
-        umls & C0686347 & Tardive dyskinesia & 0.038 & 1.419 \\
+        umls & C0686347 & Tardive dyskinesia & 0.038  \\
         \hline
-        umls & C0242422 & Parkinsonism & 0.044 & 1.356 \\
+        umls & C0242422 & Parkinsonism & 0.044  \\
         \hline
-        umls & C0235063 & Respiratory depression & 0.053 & 1.273 \\
+        umls & C0235063 & Respiratory depression & 0.053 \\
         \hline
     \end{tabular}
     \captionsetup{justification=centering}
