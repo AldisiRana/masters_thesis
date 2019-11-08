@@ -2,6 +2,8 @@
 
 This repository contains the master thesis of Rana Subhi Aldisi. Click [here](https://github.com/AldisiRana/masters_thesis/raw/master/main.pdf) for the latest version.
 
+The predictions in this thesis were produced using this predictive model: [1209_node2vec_predictive_model.pkl](https://github.com/seffnet/seffnet/blob/master/resources/predictive_models/1209_node2vec_predictive_model.pkl) and its corresbonding embeddings [1209_node2vec_emb.embeddings](https://github.com/seffnet/seffnet/blob/master/resources/embeddings/1209_node2vec_emb.embeddings)
+
 ## Build
 
 To build as a PDF, clone the repository and use the following command:
